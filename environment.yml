@@ -1,0 +1,19 @@
+name: mnlp
+
+channels:
+  - pytorch
+  - nvidia
+  - conda-forge
+
+dependencies:
+  - python=3.12.7
+  - pip=24.2.0
+
+  - pytorch=2.5.0
+  - pytorch-cuda=11.8
+
+  - pip:
+      - transformers==4.46.3
+      - accelerate==1.0.1
+      - sentencepiece==0.2.0
+      - protobuf>=4.25.3,<6
