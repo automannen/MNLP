@@ -23,19 +23,13 @@ from dataset_pipeline import (
     validate_pair,
 )
 
+from model_pipeline import (
+    load_model,
+    translate_batch,
+    run_inference
+)
 
-def run(config_path="config.yaml"):
-    config = load_config(config_path)
-
-    dataset_name = config["dataset"]["name"]
-    split = config["dataset"]["split"]
-    data_dir = config["dataset"]["data_dir"]
-    processed_dir = config["processed_dir"]
-    batch_size = config["dataloader"]["batch_size"]
-    max_length = config["dataloader"]["max_length"]
-    checkpoint = config["model"]["checkpoint"]
-    directions = config["directions"]
-
+def build_data_loaders(directions, tokenizer, split, data_dir, dataset_name, checkpoint, processed_dir, batch_size, max_length):
     # Step 1: load (download once, then reuse local cache for) every required language.
     required_langs = sorted({lang for pair in directions for lang in pair})
     language_data = {}
@@ -43,7 +37,6 @@ def run(config_path="config.yaml"):
         print(f"[data] loading {lang} ({split}) ...")
         language_data[lang] = load_flores_language(lang, split, data_dir, dataset_name)
 
-    tokenizer = AutoTokenizer.from_pretrained(checkpoint)
 
     dataloaders = {}
     for src_lang, tgt_lang in directions:
@@ -65,6 +58,25 @@ def run(config_path="config.yaml"):
 
     print(f"[done] {len(dataloaders)} direction(s) ready: {', '.join(dataloaders)}")
     return dataloaders
+    
+
+def run(config_path="config.yaml"):
+    config = load_config(config_path)
+
+    dataset_name = config["dataset"]["name"]
+    split = config["dataset"]["split"]
+    data_dir = config["dataset"]["data_dir"]
+    processed_dir = config["processed_dir"]
+    batch_size = config["dataloader"]["batch_size"]
+    max_length = config["dataloader"]["max_length"]
+    checkpoint = config["model"]["checkpoint"]
+    directions = config["directions"]
+
+    tokenizer = AutoTokenizer.from_pretrained(checkpoint)
+    dataloaders = build_data_loaders(directions, tokenizer, split, data_dir, dataset_name, checkpoint, processed_dir, batch_size, max_length)
+
+    model = load_model(checkpoint)
+    run_inference(dataloaders, model, tokenizer)
 
 
 def main():
@@ -72,7 +84,7 @@ def main():
     parser.add_argument("--config", default="config.yaml", help="path to the YAML config")
     args = parser.parse_args()
 
-    run(args.config)
+    dataloaders = run(args.config)
 
 
 if __name__ == "__main__":
