@@ -20,3 +20,8 @@ dependencies:
       - protobuf>=4.25.3,<6
       - sacrebleu==2.4.3
       - pyyaml==6.0.2
+      - unbabel-comet==2.2.7
+      # conda's pytorch=2.5.0 fails to import without these MKL libraries.
+      - mkl==2024.0
+      # torchmetrics (used by COMET) still imports pkg_resources.
+      - setuptools<81

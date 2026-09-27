@@ -2,12 +2,12 @@
 
 #SBATCH --partition=gpu_mig
 #SBATCH --gpus=1
-#SBATCH --job-name=run_model_inference
+#SBATCH --job-name=run_evaluation
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=9
 #SBATCH --time=04:00:00
-#SBATCH --output=slurm_output_model_inference_%A_%a.out
-#SBATCH --error=slurm_error_model_inference_%A_%a.err
+#SBATCH --output=slurm_output_evaluation_%A_%a.out
+#SBATCH --error=slurm_error_evaluation_%A_%a.err
 
 module purge
 module load 2025
@@ -17,4 +17,6 @@ cd $HOME/MNLP/
 
 source activate mnlp
 
+# Compute nodes have no internet: use the models cached by --prepare_only.
+export HF_HUB_OFFLINE=1
 python run_evaluation.py
