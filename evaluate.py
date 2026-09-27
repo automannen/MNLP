@@ -123,11 +123,9 @@ def paired_bootstrap(score_fn, base_stats, sys_stats, n_samples, seed):
 # Main
 # ---------------------------------------------------------------------------
 
-def evaluate(args):
-    groups = load_outputs(args.outputs_dir)
-    print(f"[eval] found {len(groups)} run(s)")
-
-    # 1. Per-sentence statistics for every run and metric.
+def score_runs(groups, args):
+    """Per-sentence statistics for every run and metric, plus the function that
+    turns a list of those statistics into a corpus score."""
     metrics = make_sacrebleu_metrics()
     stats = {}          # (run_key, metric_name) -> per-sentence stats
     score_fns = {}      # metric_name -> function(stats) -> corpus score
@@ -144,6 +142,16 @@ def evaluate(args):
         score_fns["COMET"] = mean_score
         for key, seg_scores in comet_scores.items():
             stats[(key, "COMET")] = seg_scores
+
+    return stats, score_fns
+
+
+def evaluate(args):
+    groups = load_outputs(args.outputs_dir)
+    print(f"[eval] found {len(groups)} run(s)")
+
+    # 1. Per-sentence statistics for every run and metric.
+    stats, score_fns = score_runs(groups, args)
 
     # 2. Corpus scores and degradation relative to the baseline run.
     rows = []
@@ -221,6 +229,78 @@ def evaluate(args):
         print(f"\n[warn] no '{args.baseline}' baseline for: {missing} (degradation left empty)")
 
 
+def compare(args):
+    """Paired bootstrap between two models (both at the --baseline precision),
+    per direction and metric. Positive gain = model_b is better than model_a."""
+    model_a, model_b = args.compare
+    groups = {
+        key: records for key, records in load_outputs(args.outputs_dir).items()
+        if key[0] in (model_a, model_b) and key[1] == args.baseline
+    }
+    directions = sorted({(src, tgt) for (_, _, src, tgt) in groups})
+    missing = [
+        (model, src, tgt) for model in (model_a, model_b) for src, tgt in directions
+        if (model, args.baseline, src, tgt) not in groups
+    ]
+    if not directions or missing:
+        raise ValueError(f"need '{args.baseline}' outputs of both models for every direction, missing: "
+                         f"{missing or [model_a, model_b]}")
+    print(f"[compare] {model_b} vs {model_a} on {len(directions)} direction(s)")
+
+    stats, score_fns = score_runs(groups, args)
+    n_tests = len(directions) * len(score_fns)
+
+    rows = []
+    for src_lang, tgt_lang in directions:
+        key_a = (model_a, args.baseline, src_lang, tgt_lang)
+        key_b = (model_b, args.baseline, src_lang, tgt_lang)
+        if [r["id"] for r in groups[key_a]] != [r["id"] for r in groups[key_b]]:
+            raise ValueError(f"{key_a} and {key_b} contain different sentence ids")
+
+        for name, score_fn in score_fns.items():
+            score_a = score_fn(stats[(key_a, name)])
+            score_b = score_fn(stats[(key_b, name)])
+            ci_low, ci_high, p_value = paired_bootstrap(
+                score_fn, stats[(key_a, name)], stats[(key_b, name)],
+                args.bootstrap_samples, args.seed,
+            )
+            # Make "positive = model_b better" hold for every metric, including TER.
+            sign = 1 if HIGHER_IS_BETTER[name] else -1
+            gain_low, gain_high = sorted((sign * ci_low, sign * ci_high))
+            rows.append({
+                "model_a": model_a,
+                "model_b": model_b,
+                "quant": args.baseline,
+                "direction": f"{src_lang}-{tgt_lang}",
+                "metric": name,
+                "higher_is_better": HIGHER_IS_BETTER[name],
+                "score_a": round(score_a, 3),
+                "score_b": round(score_b, 3),
+                "gain_b_over_a": round(sign * (score_b - score_a), 3) + 0.0,
+                "ci_low": round(gain_low, 3) + 0.0,
+                "ci_high": round(gain_high, 3) + 0.0,
+                "p_value": round(p_value, 4),
+                # Bonferroni: corrects for running n_tests tests at once.
+                "p_bonferroni": round(min(1.0, p_value * n_tests), 4),
+                "n_sentences": len(groups[key_a]),
+            })
+
+    out_csv = args.compare_csv or os.path.join("results", f"compare_{model_a}_vs_{model_b}.csv")
+    os.makedirs(os.path.dirname(out_csv) or ".", exist_ok=True)
+    with open(out_csv, "w", newline="", encoding="utf-8") as f:
+        writer = csv.DictWriter(f, fieldnames=list(rows[0].keys()))
+        writer.writeheader()
+        writer.writerows(rows)
+    print(f"[compare] wrote {len(rows)} rows -> {out_csv}")
+
+    print(f"\ngain = {model_b} minus {model_a}, positive = {model_b} better")
+    print(f"{'direction':<20}{'metric':<8}{'gain':>8}{'95% CI':>20}{'p':>8}{'p_bonf':>8}")
+    for r in rows:
+        ci = f"[{r['ci_low']}, {r['ci_high']}]"
+        print(f"{r['direction']:<20}{r['metric']:<8}{r['gain_b_over_a']:>8}{ci:>20}"
+              f"{r['p_value']:>8}{r['p_bonferroni']:>8}")
+
+
 def main():
     parser = argparse.ArgumentParser(description="Score MT outputs and quantization degradation")
     parser.add_argument("--outputs_dir", default="outputs", help="folder with inference JSONL files")
@@ -232,7 +312,15 @@ def main():
     parser.add_argument("--comet_model", default="Unbabel/wmt22-comet-da")
     parser.add_argument("--comet_batch_size", type=int, default=32)
     parser.add_argument("--gpus", type=int, default=1, help="GPUs for COMET (0 = CPU)")
-    evaluate(parser.parse_args())
+    parser.add_argument("--compare", nargs=2, metavar=("MODEL_A", "MODEL_B"),
+                        help="instead of the normal evaluation, test whether MODEL_B differs from MODEL_A "
+                             "(model names as in outputs/, e.g. nllb-200-1.3B nllb-200-distilled-1.3B)")
+    parser.add_argument("--compare_csv", help="output of --compare (default: results/compare_<A>_vs_<B>.csv)")
+    args = parser.parse_args()
+    if args.compare:
+        compare(args)
+    else:
+        evaluate(args)
 
 
 if __name__ == "__main__":
