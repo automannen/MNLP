@@ -1,0 +1,26 @@
+#!/bin/bash
+
+#SBATCH --partition=gpu_mig
+#SBATCH --gpus=1
+#SBATCH --job-name=run_evaluation_1.3B
+#SBATCH --ntasks=1
+#SBATCH --cpus-per-task=9
+#SBATCH --time=04:00:00
+#SBATCH --output=slurm_output_evaluation_1.3B_%A_%a.out
+#SBATCH --error=slurm_error_evaluation_1.3B_%A_%a.err
+
+# Distilled vs non-distilled NLLB at the same size (1.3B).
+# Download both models first on the login node with:
+#   python run_evaluation.py --prepare_only --checkpoints facebook/nllb-200-distilled-1.3B facebook/nllb-200-1.3B
+
+module purge
+module load 2025
+module load Anaconda3/2025.06-1
+
+cd $HOME/MNLP/
+
+source activate mnlp
+
+# Compute nodes have no internet: use the models cached by --prepare_only.
+export HF_HUB_OFFLINE=1
+python run_evaluation.py --checkpoints facebook/nllb-200-distilled-1.3B facebook/nllb-200-1.3B

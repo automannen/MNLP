@@ -50,6 +50,8 @@ def translate_all(dataloaders, model, tokenizer, model_name, quant, outputs_dir,
 def main():
     parser = argparse.ArgumentParser(description="Translate with the team pipeline and evaluate")
     parser.add_argument("--config", default="config.yaml")
+    parser.add_argument("--checkpoints", nargs="+",
+                        help="one or more HF model ids to translate with (default: model.checkpoint in config)")
     parser.add_argument("--quant", default="fp32",
                         help="label for this run's precision (the team's load_model is full precision)")
     parser.add_argument("--outputs_dir", default="outputs")
@@ -64,10 +66,13 @@ def main():
     args = parser.parse_args()
 
     config = load_config(args.config)
-    checkpoint = config["model"]["checkpoint"]
-    model_name = checkpoint.split("/")[-1]
+    checkpoints = args.checkpoints or [config["model"]["checkpoint"]]
 
-    if args.prepare_only or not args.skip_translation:
+    for checkpoint in checkpoints:
+        if args.skip_translation and not args.prepare_only:
+            break
+        model_name = checkpoint.split("/")[-1]
+
         tokenizer = AutoTokenizer.from_pretrained(checkpoint)
         dataloaders = build_data_loaders(
             config["directions"], tokenizer,
@@ -76,21 +81,24 @@ def main():
             config["dataloader"]["batch_size"], config["dataloader"]["max_length"],
         )
 
-    if args.prepare_only:
-        from transformers import AutoModelForSeq2SeqLM
-        from comet import download_model, load_from_checkpoint
-        print("[prepare] downloading NLLB ...")
-        AutoModelForSeq2SeqLM.from_pretrained(checkpoint)
-        print("[prepare] downloading COMET ...")
-        load_from_checkpoint(download_model(COMET_MODEL))
-        print("[prepare] done - now submit the GPU job")
-        return
+        if args.prepare_only:
+            from transformers import AutoModelForSeq2SeqLM
+            print(f"[prepare] downloading {checkpoint} ...")
+            AutoModelForSeq2SeqLM.from_pretrained(checkpoint)
+            continue
 
-    if not args.skip_translation:
+        print(f"[translate] model {checkpoint}")
         model = load_model(checkpoint)
         translate_all(dataloaders, model, tokenizer, model_name, args.quant,
                       args.outputs_dir, args.max_length, args.limit_batches)
         del model
+
+    if args.prepare_only:
+        from comet import download_model, load_from_checkpoint
+        print("[prepare] downloading COMET ...")
+        load_from_checkpoint(download_model(COMET_MODEL))
+        print("[prepare] done - now submit the GPU job")
+        return
 
     ev.evaluate(Namespace(
         outputs_dir=args.outputs_dir,
