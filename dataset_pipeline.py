@@ -8,7 +8,7 @@ import yaml
 from datasets import Dataset, load_dataset
 from torch.utils.data import DataLoader
 
-MAX_DIRECTIONS = 6
+MAX_DIRECTIONS = 100
 
 
 def load_config(path="config.yaml"):
