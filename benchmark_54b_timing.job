@@ -14,9 +14,8 @@
 # (10 sanity + 100 timed sentences on ONE direction) - NOT the full FLORES
 # experiment. Extrapolates to the full experiment runtime from config.yaml.
 #
-# NOTE: --partition name is unverified (no cluster access while writing this) -
-# check `sinfo -o "%P"` / SURF docs for the actual H100 partition name first.
 # --time budget is a guess; increase it if CPU offload makes generation slow.
+# Load check showed CPU offload, so batch_size is 16 to amortize weight transfers.
 
 module purge
 module load 2025
@@ -35,6 +34,6 @@ python benchmark_nllb_moe_54b.py \
     --precision bf16 \
     --n_sanity 10 \
     --n_timing 100 \
-    --batch_size 4 \
+    --batch_size 16 \
     --max_length 256 \
     --out_json results/benchmark_nllb_moe_54b_h100.json
