@@ -189,6 +189,14 @@ def main():
         },
     }
 
+    # Data first: a missing offline cache should fail in seconds, not after the 16 min model load.
+    print(f"[benchmark] loading FLORES data for {direction} ({split}) ...")
+    source_data = load_flores_language(src_lang, split, data_dir, dataset_name)
+    target_data = load_flores_language(tgt_lang, split, data_dir, dataset_name)
+    pairs = build_translation_pair(source_data, target_data, src_lang, tgt_lang)
+    validate_pair(pairs, src_lang, tgt_lang)
+    result["examples_available_in_split"] = len(pairs)
+
     print(f"[benchmark] loading {args.checkpoint} ({args.precision}) with device_map='auto' ...")
     if torch.cuda.is_available():
         torch.cuda.reset_peak_memory_stats()
@@ -216,13 +224,6 @@ def main():
         return
 
     tokenizer = AutoTokenizer.from_pretrained(args.checkpoint)
-
-    print(f"[benchmark] loading FLORES data for {direction} ({split}) ...")
-    source_data = load_flores_language(src_lang, split, data_dir, dataset_name)
-    target_data = load_flores_language(tgt_lang, split, data_dir, dataset_name)
-    pairs = build_translation_pair(source_data, target_data, src_lang, tgt_lang)
-    validate_pair(pairs, src_lang, tgt_lang)
-    result["examples_available_in_split"] = len(pairs)
 
     sanity_pairs = pairs[:args.n_sanity]
     timing_pairs = pairs[args.n_sanity:args.n_sanity + args.n_timing]
