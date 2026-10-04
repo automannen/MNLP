@@ -1,0 +1,39 @@
+#!/bin/bash
+
+#SBATCH --partition=gpu_h100
+#SBATCH --gpus=1
+#SBATCH --job-name=bench54b_loadcheck
+#SBATCH --ntasks=1
+#SBATCH --cpus-per-task=16
+#SBATCH --time=01:00:00
+#SBATCH --output=slurm_output_bench54b_loadcheck_%A.out
+#SBATCH --error=slurm_error_bench54b_loadcheck_%A.err
+
+# Stage 1 of 2 (see README §32): can facebook/nllb-moe-54b even be loaded on one
+# H100 (94 GiB VRAM)? No inference here - just load the model, record the
+# device map / peak VRAM, then stop. Submit benchmark_54b_timing.job only if
+# this succeeds without heavy CPU/disk offload.
+#
+# NOTE: --partition name is unverified (no cluster access while writing this) -
+# check `sinfo -o "%P"` / SURF docs for the actual H100 partition name first.
+#
+# Run the download step on the LOGIN NODE first (compute nodes have no
+# internet): see README §32 for the snapshot_download command. Must use the
+# SAME HF_HOME as the download step below (facebook/nllb-moe-54b is ~220GB,
+# which does not fit in the 200 GiB home quota - it must live on scratch).
+
+module purge
+module load 2025
+module load Anaconda3/2025.06-1
+
+cd $HOME/MNLP/
+
+source activate mnlp
+
+export HF_HOME=/scratch-shared/$USER/hf_cache
+export HF_HUB_OFFLINE=1
+python benchmark_nllb_moe_54b.py \
+    --checkpoint facebook/nllb-moe-54b \
+    --precision bf16 \
+    --load_only \
+    --out_json results/benchmark_nllb_moe_54b_h100_loadcheck.json
