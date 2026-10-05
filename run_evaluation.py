@@ -13,17 +13,28 @@ from model_pipeline import load_model, translate_batch
 COMET_MODEL = "Unbabel/wmt22-comet-da"
 
 
-def translate_all(dataloaders, model, tokenizer, model_name, quant, outputs_dir,
+def translate_all(dataloaders, model, flores_to_nllb, tokenizer, model_name, quant, outputs_dir,
                   max_length, limit_batches=None):
     for direction, dataloader in dataloaders.items():
         src_lang, tgt_lang = direction.split("-")
-        tokenizer.src_lang = src_lang
+        
+        if src_lang in flores_to_nllb:
+            src_lang_model = flores_to_nllb[src_lang]
+        else: 
+            src_lang_model = src_lang
+        
+        if tgt_lang in flores_to_nllb:
+            tgt_lang_model = flores_to_nllb[tgt_lang]
+        else:
+            tgt_lang_model = tgt_lang
+            
+        tokenizer.src_lang = src_lang_model
 
         records = []
         for i, batch in enumerate(dataloader):
             if limit_batches and i >= limit_batches:
                 break
-            hyps = translate_batch(model, batch, tokenizer, tgt_lang, max_length=max_length)
+            hyps = translate_batch(model, batch, tokenizer, tgt_lang_model, max_length=max_length)
             for sent_id, source, reference, hyp in zip(
                 batch["ids"], batch["sources"], batch["references"], hyps
             ):
@@ -89,7 +100,7 @@ def main():
 
         print(f"[translate] model {checkpoint}")
         model = load_model(checkpoint)
-        translate_all(dataloaders, model, tokenizer, model_name, args.quant,
+        translate_all(dataloaders, model, config["model"]["language_code_mapping"], tokenizer, model_name, args.quant,
                       args.outputs_dir, args.max_length, args.limit_batches)
         del model
 

@@ -118,8 +118,6 @@ def create_flores_dataloader(
         }
     )
 
-    tokenizer.src_lang = src_lang
-
     def collate_fn(examples):
         source_texts = [example["source"] for example in examples]
 
