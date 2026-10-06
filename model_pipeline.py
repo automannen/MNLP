@@ -1,5 +1,3 @@
-# Copied from: https://huggingface.co/docs/transformers/model_doc/nllb
-
 from transformers import AutoModelForSeq2SeqLM
 
 
