@@ -2,10 +2,10 @@
 
 #SBATCH --partition=gpu_mig
 #SBATCH --gpus=1
-#SBATCH --job-name=compare_1.3B
+#SBATCH --job-name=compare_54B_1.3Bdistilled
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=9
-#SBATCH --time=01:00:00
+#SBATCH --time=08:00:00
 #SBATCH --output=slurm_output_compare_1.3B_%A_%a.out
 #SBATCH --error=slurm_error_compare_1.3B_%A_%a.err
 
@@ -22,4 +22,4 @@ source activate mnlp
 
 # Compute nodes have no internet: use the COMET model cached by --prepare_only.
 export HF_HUB_OFFLINE=1
-python evaluate.py --compare nllb-200-1.3B nllb-200-distilled-1.3B
+python evaluate.py --compare nllb-moe-54b nllb-200-distilled-1.3B

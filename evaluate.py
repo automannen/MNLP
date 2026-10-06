@@ -228,6 +228,13 @@ def evaluate(args):
     if missing:
         print(f"\n[warn] no '{args.baseline}' baseline for: {missing} (degradation left empty)")
 
+def get_model_quant(groups, current_model):
+    quants = {quant for (model, quant, _, _) in groups if model == current_model}
+    
+    if len(quants) != 1:
+        raise ValueError(f"Expected one quant level for {current_model} but found {sorted(quants)}")
+    
+    return next(iter(quants))
 
 def compare(args):
     """Paired bootstrap between two models (both at the --baseline precision),
@@ -235,25 +242,32 @@ def compare(args):
     model_a, model_b = args.compare
     groups = {
         key: records for key, records in load_outputs(args.outputs_dir).items()
-        if key[0] in (model_a, model_b) and key[1] == args.baseline
+        if key[0] in (model_a, model_b)
     }
-    directions = sorted({(src, tgt) for (_, _, src, tgt) in groups})
-    missing = [
-        (model, src, tgt) for model in (model_a, model_b) for src, tgt in directions
-        if (model, args.baseline, src, tgt) not in groups
-    ]
-    if not directions or missing:
+    
+    directions_a = {(src, tgt) for (model, _, src, tgt) in groups if model == model_a}
+    
+    directions_b = {(src, tgt) for (model, _, src, tgt) in groups if model == model_b}
+    
+    # take intersection since 54B model has less directions
+    directions = sorted(directions_a & directions_b)
+    
+    quant_model_a = get_model_quant(groups, model_a)
+    quant_model_b = get_model_quant(groups, model_b)
+
+    if not directions:
         raise ValueError(f"need '{args.baseline}' outputs of both models for every direction, missing: "
                          f"{missing or [model_a, model_b]}")
     print(f"[compare] {model_b} vs {model_a} on {len(directions)} direction(s)")
 
     stats, score_fns = score_runs(groups, args)
     n_tests = len(directions) * len(score_fns)
+    
 
     rows = []
     for src_lang, tgt_lang in directions:
-        key_a = (model_a, args.baseline, src_lang, tgt_lang)
-        key_b = (model_b, args.baseline, src_lang, tgt_lang)
+        key_a = (model_a, quant_model_a, src_lang, tgt_lang)
+        key_b = (model_b, quant_model_b, src_lang, tgt_lang)
         if [r["id"] for r in groups[key_a]] != [r["id"] for r in groups[key_b]]:
             raise ValueError(f"{key_a} and {key_b} contain different sentence ids")
 
@@ -270,7 +284,8 @@ def compare(args):
             rows.append({
                 "model_a": model_a,
                 "model_b": model_b,
-                "quant": args.baseline,
+                "quant_a": quant_model_a,
+                "quant_b": quant_model_b,
                 "direction": f"{src_lang}-{tgt_lang}",
                 "metric": name,
                 "higher_is_better": HIGHER_IS_BETTER[name],
