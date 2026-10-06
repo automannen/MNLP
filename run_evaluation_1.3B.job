@@ -23,4 +23,4 @@ source activate mnlp
 
 # Compute nodes have no internet: use the models cached by --prepare_only.
 export HF_HUB_OFFLINE=1
-python run_evaluation.py --checkpoints facebook/nllb-200-distilled-1.3B facebook/nllb-200-1.3B --outputs_dir outputs_cmn_hant
+python run_evaluation.py --checkpoints facebook/nllb-200-distilled-1.3B facebook/nllb-200-1.3B --outputs_dir outputs_first_six_directions --out_csv results/1.3B_6directions.csv
