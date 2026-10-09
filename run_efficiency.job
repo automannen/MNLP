@@ -1,0 +1,59 @@
+#!/bin/bash
+
+#SBATCH --partition=gpu_h100
+#SBATCH --gpus=1
+#SBATCH --job-name=efficiency
+#SBATCH --ntasks=1
+#SBATCH --cpus-per-task=16
+#SBATCH --time=12:00:00
+#SBATCH --output=slurm_output_efficiency_%A.out
+#SBATCH --error=slurm_error_efficiency_%A.err
+
+# Efficiency of the distilled student (and a same-size non-distilled baseline) vs the 54B
+# teacher (see evaluate_efficiency.py):
+#   1. measure size/speed/memory of every model on the same H100 with the same settings,
+#   2. report compression ratio, speedup and quality retained from those files + outputs/.
+#
+# Before submitting, run once on the login node (sacrebleu downloads its spBLEU tokenizer
+# on first use and compute nodes have no internet):
+#   python evaluate_efficiency.py report --teacher nllb-200-1.3B --students nllb-200-distilled-1.3B --no_comet
+#
+# --time budget is a guess: the students take minutes, the teacher is slow because of CPU
+# offload (~21 min load, ~7.9 s/sentence at batch 16, slower per sentence at batch 1).
+# Every stage is saved as soon as it finishes, so a timeout only loses the stage in progress.
+
+module purge
+module load 2025
+module load Anaconda3/2025.06-1
+
+cd $HOME/MNLP/
+
+source activate mnlp
+
+# Compute nodes have no internet: use the models cached on the login node.
+export HF_HUB_OFFLINE=1
+
+# Identical for every model, otherwise the speedup is not like-for-like. The directions are
+# the eight the teacher translates in run_nllb_moe_54b.job, so speed and quality cover the
+# same ones. Sentence counts are kept small because of the teacher.
+SETTINGS="--directions eng_Latn-ace_Arab ace_Arab-eng_Latn arb_Arab-ace_Arab ace_Arab-arb_Arab \
+                       rus_Cyrl-bak_Cyrl bak_Cyrl-rus_Cyrl eng_Latn-swh_Latn swh_Latn-eng_Latn \
+          --n_sentences 32 --batch_size 16 --runs 3 --n_latency 5 --max_length 256"
+
+# Small models first: they are fast, so their results exist even if the teacher times out.
+python evaluate_efficiency.py measure --checkpoint facebook/nllb-200-distilled-1.3B --precision fp32 $SETTINGS
+python evaluate_efficiency.py measure --checkpoint facebook/nllb-200-1.3B --precision fp32 $SETTINGS
+
+# The 54B checkpoint lives in the scratch cache (too big for the home quota), the other
+# models in the default one, so HF_HOME is set for this command only.
+HF_HOME=/scratch-shared/$USER/hf_cache \
+    python evaluate_efficiency.py measure --checkpoint facebook/nllb-moe-54b --precision bf16 $SETTINGS
+
+# The report needs the teacher's translations from run_nllb_moe_54b.job; it uses whichever
+# directions are finished. Rerun this line on its own later to include more directions.
+if [ -d outputs/nllb-moe-54b/bf16 ]; then
+    python evaluate_efficiency.py report --teacher nllb-moe-54b \
+        --students nllb-200-distilled-1.3B --baselines nllb-200-1.3B
+else
+    echo "[efficiency] no teacher translations in outputs/nllb-moe-54b/bf16 yet, skipping report"
+fi

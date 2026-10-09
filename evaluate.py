@@ -59,7 +59,9 @@ def make_sacrebleu_metrics():
     return {
         # chrF++: character n-grams plus word uni/bigrams (word_order=2).
         "chrF++": CHRF(word_order=2),
-        "TER": TER(),
+        # Chinese/Cantonese have no spaces, so default TER mostly counts spaces the model
+        # inserts; normalized + asian_support tokenizes CJK per character.
+        "TER": TER(normalized=True, asian_support=True),
     }
 
 

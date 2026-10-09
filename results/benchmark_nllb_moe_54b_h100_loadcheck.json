@@ -1,0 +1,30 @@
+{
+  "model": "facebook/nllb-moe-54b",
+  "precision": "bf16",
+  "timestamp": "2026-10-04T20:26:00.957939+00:00",
+  "gpu": {
+    "available": true,
+    "name": "NVIDIA H100",
+    "count": 1,
+    "total_memory_gb": 100.0
+  },
+  "cpu_ram_gb": 755.6,
+  "benchmark_config": {
+    "direction": "eng_Latn-bak_Cyrl",
+    "split": "dev",
+    "batch_size": 4,
+    "max_length": 256,
+    "n_sanity": 10,
+    "n_timing": 100
+  },
+  "load": {
+    "seconds": 947.6,
+    "peak_gpu_memory_gb": 75.25,
+    "device_map_module_counts": {
+      "0": 16,
+      "cpu": 14
+    },
+    "cpu_offload": true,
+    "disk_offload": false
+  }
+}

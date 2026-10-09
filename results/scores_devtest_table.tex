@@ -1,0 +1,116 @@
+% Requires \usepackage{booktabs} and \usepackage{longtable}.
+% Generated from results/scores_devtest.csv (FLORES+ devtest, 1012 sentences per direction).
+\begingroup
+\small
+\setlength{\tabcolsep}{4pt}
+\begin{longtable}{ll rrr rrr rrr}
+\caption{Scores on the FLORES+ devtest split for NLLB-200 1.3B (1.3B), NLLB-200 distilled 1.3B (d-1.3B) and NLLB-200 distilled 600M (d-600M). TER is computed with sacreBLEU using \texttt{normalized=True} and \texttt{asian\_support=True}. The best score per metric in each row is in bold.}
+\label{tab:devtest-scores} \\
+\toprule
+ & & \multicolumn{3}{c}{chrF++ $\uparrow$} & \multicolumn{3}{c}{TER $\downarrow$} & \multicolumn{3}{c}{COMET $\uparrow$} \\
+\cmidrule(lr){3-5} \cmidrule(lr){6-8} \cmidrule(lr){9-11}
+Source & Target & 1.3B & d-1.3B & d-600M & 1.3B & d-1.3B & d-600M & 1.3B & d-1.3B & d-600M \\
+\midrule
+\endfirsthead
+\multicolumn{11}{l}{\tablename\ \thetable\ (continued)} \\
+\toprule
+ & & \multicolumn{3}{c}{chrF++ $\uparrow$} & \multicolumn{3}{c}{TER $\downarrow$} & \multicolumn{3}{c}{COMET $\uparrow$} \\
+\cmidrule(lr){3-5} \cmidrule(lr){6-8} \cmidrule(lr){9-11}
+Source & Target & 1.3B & d-1.3B & d-600M & 1.3B & d-1.3B & d-600M & 1.3B & d-1.3B & d-600M \\
+\midrule
+\endhead
+\midrule
+\multicolumn{11}{r}{Continued on next page} \\
+\endfoot
+\bottomrule
+\endlastfoot
+\multicolumn{11}{l}{\textit{The eight original languages}} \\
+\texttt{eng\_Latn} & \texttt{swh\_Latn} & \textbf{57.5} & 57.4 & 56.2 & \textbf{47.6} & 48.8 & 50.4 & 83.1 & \textbf{83.2} & 82.5 \\
+\texttt{eng\_Latn} & \texttt{rus\_Cyrl} & 52.5 & \textbf{53.1} & 50.6 & 52.8 & \textbf{51.9} & 54.9 & 87.5 & \textbf{88.0} & 85.7 \\
+\texttt{eng\_Latn} & \texttt{bak\_Cyrl} & \textbf{44.6} & \textbf{44.6} & 42.7 & 64.9 & \textbf{64.3} & 68.2 & \textbf{74.9} & 74.8 & 74.3 \\
+\texttt{eng\_Latn} & \texttt{cmn\_Hant} & 10.5 & 10.7 & \textbf{11.0} & 76.7 & \textbf{76.0} & 76.2 & 67.9 & \textbf{69.0} & 68.1 \\
+\texttt{eng\_Latn} & \texttt{yue\_Hant} & 18.9 & \textbf{19.6} & 17.1 & 58.4 & \textbf{57.6} & 62.4 & 83.3 & \textbf{83.7} & 80.2 \\
+\texttt{eng\_Latn} & \texttt{arb\_Arab} & 52.5 & \textbf{52.9} & 50.2 & 56.4 & \textbf{56.3} & 59.4 & 85.2 & \textbf{85.4} & 83.6 \\
+\texttt{eng\_Latn} & \texttt{ace\_Arab} & \textbf{15.2} & 14.4 & 13.4 & \textbf{105.7} & 135.0 & 121.4 & \textbf{57.9} & 56.7 & 55.7 \\
+\addlinespace
+\texttt{swh\_Latn} & \texttt{eng\_Latn} & \textbf{62.9} & 62.4 & 59.6 & \textbf{37.3} & 38.1 & 41.2 & 85.0 & \textbf{85.1} & 83.4 \\
+\texttt{swh\_Latn} & \texttt{rus\_Cyrl} & 43.0 & \textbf{43.1} & 39.8 & \textbf{62.1} & 62.7 & 65.7 & 81.5 & \textbf{82.2} & 77.8 \\
+\texttt{swh\_Latn} & \texttt{bak\_Cyrl} & 37.5 & \textbf{37.9} & 35.1 & 72.2 & \textbf{70.8} & 76.0 & \textbf{71.5} & \textbf{71.5} & 70.5 \\
+\texttt{swh\_Latn} & \texttt{cmn\_Hant} & 9.1 & 9.5 & \textbf{10.0} & 78.1 & 78.3 & \textbf{77.2} & 65.7 & 67.4 & \textbf{67.6} \\
+\texttt{swh\_Latn} & \texttt{yue\_Hant} & 14.9 & \textbf{15.3} & 13.5 & 68.0 & \textbf{66.0} & 71.7 & 78.2 & \textbf{78.6} & 74.9 \\
+\texttt{swh\_Latn} & \texttt{arb\_Arab} & 42.4 & \textbf{42.5} & 38.4 & 66.6 & \textbf{66.5} & 71.4 & 79.7 & \textbf{80.1} & 75.7 \\
+\texttt{swh\_Latn} & \texttt{ace\_Arab} & \textbf{14.6} & 12.6 & 11.9 & \textbf{111.1} & 145.3 & 123.3 & \textbf{58.2} & 54.3 & 53.9 \\
+\addlinespace
+\texttt{rus\_Cyrl} & \texttt{eng\_Latn} & \textbf{59.6} & \textbf{59.6} & 57.6 & 45.9 & \textbf{45.5} & 47.8 & 86.0 & \textbf{86.1} & 85.1 \\
+\texttt{rus\_Cyrl} & \texttt{swh\_Latn} & \textbf{47.4} & 47.0 & 45.8 & 65.7 & \textbf{63.3} & 64.4 & 78.7 & \textbf{78.8} & 77.7 \\
+\texttt{rus\_Cyrl} & \texttt{bak\_Cyrl} & \textbf{45.8} & 45.7 & 44.6 & 66.4 & \textbf{66.1} & 68.3 & \textbf{75.9} & 75.6 & 75.4 \\
+\texttt{rus\_Cyrl} & \texttt{cmn\_Hant} & 9.4 & \textbf{9.6} & \textbf{9.6} & 77.8 & \textbf{76.8} & 80.4 & 67.0 & \textbf{68.1} & 65.0 \\
+\texttt{rus\_Cyrl} & \texttt{yue\_Hant} & 15.1 & \textbf{16.0} & 14.3 & 66.2 & \textbf{64.8} & 67.2 & 79.7 & \textbf{80.2} & 78.1 \\
+\texttt{rus\_Cyrl} & \texttt{arb\_Arab} & 41.7 & \textbf{42.3} & 39.6 & 71.5 & \textbf{70.1} & 73.1 & 81.5 & \textbf{81.7} & 79.0 \\
+\texttt{rus\_Cyrl} & \texttt{ace\_Arab} & \textbf{15.3} & 13.6 & 12.4 & \textbf{108.3} & 142.9 & 137.3 & \textbf{58.2} & 54.8 & 53.4 \\
+\addlinespace
+\texttt{bak\_Cyrl} & \texttt{eng\_Latn} & 54.8 & \textbf{55.1} & 52.4 & 51.2 & \textbf{50.4} & 53.9 & 79.9 & \textbf{80.3} & 78.5 \\
+\texttt{bak\_Cyrl} & \texttt{swh\_Latn} & 45.4 & \textbf{46.5} & 43.7 & 68.0 & \textbf{63.6} & 69.8 & 75.0 & \textbf{75.4} & 73.7 \\
+\texttt{bak\_Cyrl} & \texttt{rus\_Cyrl} & 46.9 & \textbf{47.3} & 44.7 & 60.5 & \textbf{59.9} & 63.0 & 83.1 & \textbf{83.6} & 80.7 \\
+\texttt{bak\_Cyrl} & \texttt{cmn\_Hant} & 11.0 & 12.0 & \textbf{12.7} & 76.8 & \textbf{73.0} & 75.6 & 66.6 & \textbf{69.3} & 68.9 \\
+\texttt{bak\_Cyrl} & \texttt{yue\_Hant} & 14.8 & \textbf{15.4} & 12.6 & 69.2 & \textbf{66.9} & 75.3 & 76.6 & \textbf{76.7} & 72.3 \\
+\texttt{bak\_Cyrl} & \texttt{arb\_Arab} & 39.6 & \textbf{40.3} & 35.7 & 72.8 & \textbf{72.4} & 79.8 & 75.9 & \textbf{76.5} & 72.3 \\
+\texttt{bak\_Cyrl} & \texttt{ace\_Arab} & \textbf{14.5} & 12.3 & 10.1 & \textbf{117.2} & 166.9 & 167.3 & \textbf{61.2} & 55.4 & 52.1 \\
+\addlinespace
+\texttt{cmn\_Hant} & \texttt{eng\_Latn} & 49.3 & \textbf{50.4} & 46.2 & 63.6 & \textbf{61.7} & 69.8 & 82.8 & \textbf{83.8} & 80.5 \\
+\texttt{cmn\_Hant} & \texttt{swh\_Latn} & 37.6 & \textbf{39.4} & 38.1 & 111.1 & 100.7 & \textbf{100.0} & 72.3 & \textbf{75.0} & 74.0 \\
+\texttt{cmn\_Hant} & \texttt{rus\_Cyrl} & 33.9 & \textbf{37.6} & 34.1 & 112.0 & \textbf{87.1} & 101.6 & 74.9 & \textbf{81.0} & 74.9 \\
+\texttt{cmn\_Hant} & \texttt{bak\_Cyrl} & 32.0 & \textbf{32.8} & 32.3 & 106.1 & 100.9 & \textbf{97.2} & 68.2 & 68.7 & \textbf{69.5} \\
+\texttt{cmn\_Hant} & \texttt{yue\_Hant} & \textbf{14.5} & 12.7 & 11.8 & \textbf{77.8} & 79.9 & 102.2 & \textbf{79.4} & 78.9 & 76.3 \\
+\texttt{cmn\_Hant} & \texttt{arb\_Arab} & 33.0 & \textbf{35.6} & 33.3 & 101.4 & 91.5 & \textbf{88.7} & 74.2 & \textbf{76.9} & 74.8 \\
+\texttt{cmn\_Hant} & \texttt{ace\_Arab} & \textbf{9.9} & 9.3 & 4.9 & \textbf{157.1} & 229.3 & 253.9 & 48.2 & \textbf{48.4} & 35.7 \\
+\addlinespace
+\texttt{yue\_Hant} & \texttt{eng\_Latn} & 52.3 & \textbf{53.3} & 49.9 & 54.3 & \textbf{52.8} & 57.2 & 84.2 & \textbf{84.7} & 82.8 \\
+\texttt{yue\_Hant} & \texttt{swh\_Latn} & 43.3 & \textbf{44.9} & 41.9 & 67.7 & \textbf{66.5} & 71.8 & 78.3 & \textbf{79.0} & 76.9 \\
+\texttt{yue\_Hant} & \texttt{rus\_Cyrl} & 40.4 & \textbf{41.8} & 38.2 & 67.3 & \textbf{65.9} & 70.6 & 83.3 & \textbf{84.2} & 80.2 \\
+\texttt{yue\_Hant} & \texttt{bak\_Cyrl} & 36.6 & \textbf{38.5} & 35.3 & 77.4 & \textbf{73.1} & 77.4 & 71.9 & \textbf{72.7} & 71.7 \\
+\texttt{yue\_Hant} & \texttt{cmn\_Hant} & 11.3 & \textbf{13.5} & 13.1 & 74.3 & \textbf{69.5} & 70.2 & 72.9 & \textbf{78.3} & 76.3 \\
+\texttt{yue\_Hant} & \texttt{arb\_Arab} & 37.3 & \textbf{38.9} & 34.1 & 75.1 & \textbf{73.5} & 80.4 & 79.1 & \textbf{80.0} & 75.6 \\
+\texttt{yue\_Hant} & \texttt{ace\_Arab} & \textbf{13.8} & 12.0 & 10.0 & \textbf{113.9} & 152.8 & 159.0 & \textbf{57.0} & 53.3 & 50.2 \\
+\addlinespace
+\texttt{arb\_Arab} & \texttt{eng\_Latn} & 63.7 & \textbf{63.9} & 61.1 & 39.5 & \textbf{39.4} & 42.6 & 87.0 & \textbf{87.3} & 85.6 \\
+\texttt{arb\_Arab} & \texttt{swh\_Latn} & 50.0 & \textbf{50.2} & 47.9 & 58.9 & \textbf{58.0} & 60.2 & 80.0 & \textbf{80.4} & 78.7 \\
+\texttt{arb\_Arab} & \texttt{rus\_Cyrl} & 46.4 & \textbf{46.7} & 43.7 & 60.5 & \textbf{60.2} & 64.0 & 84.9 & \textbf{85.3} & 82.1 \\
+\texttt{arb\_Arab} & \texttt{bak\_Cyrl} & 40.7 & \textbf{41.7} & 38.6 & 71.3 & \textbf{69.6} & 73.0 & 73.1 & \textbf{73.3} & 72.4 \\
+\texttt{arb\_Arab} & \texttt{cmn\_Hant} & 9.5 & \textbf{10.0} & 9.3 & \textbf{76.6} & 76.9 & 78.4 & 67.7 & \textbf{69.2} & 65.9 \\
+\texttt{arb\_Arab} & \texttt{yue\_Hant} & 14.8 & \textbf{15.8} & 14.2 & 65.2 & \textbf{63.5} & 68.7 & 79.3 & \textbf{80.4} & 77.4 \\
+\texttt{arb\_Arab} & \texttt{ace\_Arab} & \textbf{15.4} & 13.2 & 12.5 & \textbf{108.3} & 147.9 & 129.4 & \textbf{60.4} & 56.2 & 55.6 \\
+\addlinespace
+\texttt{ace\_Arab} & \texttt{eng\_Latn} & 32.4 & \textbf{33.4} & 30.4 & 82.1 & \textbf{79.3} & 84.1 & 53.1 & \textbf{55.4} & 51.2 \\
+\texttt{ace\_Arab} & \texttt{swh\_Latn} & 28.8 & \textbf{29.9} & 26.2 & 100.7 & \textbf{92.9} & 112.5 & 55.4 & \textbf{58.3} & 52.7 \\
+\texttt{ace\_Arab} & \texttt{rus\_Cyrl} & 24.0 & \textbf{24.8} & 22.2 & 92.2 & \textbf{88.7} & 92.2 & 52.3 & \textbf{55.2} & 48.5 \\
+\texttt{ace\_Arab} & \texttt{bak\_Cyrl} & 21.8 & \textbf{23.2} & 19.3 & 108.8 & \textbf{93.1} & 121.5 & 65.5 & \textbf{67.0} & 63.7 \\
+\texttt{ace\_Arab} & \texttt{cmn\_Hant} & 7.1 & \textbf{7.5} & 6.2 & 93.3 & \textbf{92.7} & 106.1 & 49.4 & \textbf{51.6} & 44.1 \\
+\texttt{ace\_Arab} & \texttt{yue\_Hant} & 7.2 & \textbf{8.0} & 5.1 & 100.9 & \textbf{95.8} & 139.8 & 53.9 & \textbf{56.1} & 46.1 \\
+\texttt{ace\_Arab} & \texttt{arb\_Arab} & 23.2 & \textbf{24.2} & 20.9 & 99.0 & \textbf{93.9} & 105.6 & 52.4 & \textbf{55.4} & 48.8 \\
+\midrule
+\multicolumn{11}{l}{\textit{Latin-script Acehnese}} \\
+\texttt{eng\_Latn} & \texttt{ace\_Latn} & \textbf{36.8} & 36.7 & 35.6 & \textbf{73.7} & 73.8 & 75.4 & \textbf{58.9} & 58.1 & 58.3 \\
+\texttt{swh\_Latn} & \texttt{ace\_Latn} & 32.3 & \textbf{32.5} & 30.1 & 83.8 & \textbf{83.4} & 92.2 & 60.7 & \textbf{61.3} & 59.9 \\
+\texttt{rus\_Cyrl} & \texttt{ace\_Latn} & \textbf{31.3} & 31.0 & 30.0 & 89.7 & \textbf{86.1} & 99.2 & 58.9 & \textbf{59.0} & \textbf{59.0} \\
+\texttt{bak\_Cyrl} & \texttt{ace\_Latn} & \textbf{30.7} & \textbf{30.7} & 27.7 & 92.8 & \textbf{89.8} & 114.0 & \textbf{62.8} & 62.3 & 62.4 \\
+\texttt{cmn\_Hant} & \texttt{ace\_Latn} & \textbf{23.8} & 22.7 & 23.4 & \textbf{176.1} & 186.9 & 184.9 & 54.0 & 53.9 & \textbf{55.2} \\
+\texttt{yue\_Hant} & \texttt{ace\_Latn} & \textbf{28.9} & 28.7 & 27.1 & \textbf{91.3} & 92.5 & 115.4 & 57.8 & \textbf{58.7} & 58.4 \\
+\texttt{arb\_Arab} & \texttt{ace\_Latn} & \textbf{32.2} & 32.0 & 30.6 & \textbf{83.5} & 84.8 & 96.9 & 58.7 & 58.6 & \textbf{58.9} \\
+\texttt{ace\_Latn} & \texttt{eng\_Latn} & 46.7 & \textbf{47.6} & 43.2 & 64.2 & \textbf{62.6} & 71.1 & 68.6 & \textbf{69.6} & 65.2 \\
+\midrule
+\multicolumn{11}{l}{\textit{Banjar, Kashmiri and Tamasheq}} \\
+\texttt{eng\_Latn} & \texttt{bjn\_Arab} & \textbf{15.4} & 14.0 & 13.7 & \textbf{124.1} & 167.1 & 129.4 & \textbf{56.0} & 54.0 & 53.8 \\
+\texttt{bjn\_Arab} & \texttt{eng\_Latn} & 35.8 & \textbf{37.4} & 32.7 & 73.6 & \textbf{70.3} & 77.7 & 57.0 & \textbf{59.3} & 53.3 \\
+\texttt{eng\_Latn} & \texttt{bjn\_Latn} & 46.5 & \textbf{47.2} & 45.4 & 59.7 & \textbf{57.9} & 59.5 & 72.5 & \textbf{72.8} & 71.7 \\
+\texttt{bjn\_Latn} & \texttt{eng\_Latn} & 58.4 & \textbf{59.0} & 56.0 & 42.8 & \textbf{41.9} & 45.5 & 80.1 & \textbf{80.3} & 77.7 \\
+\texttt{eng\_Latn} & \texttt{kas\_Arab} & 31.9 & \textbf{32.4} & 30.4 & \textbf{86.5} & 89.0 & 90.1 & \textbf{65.1} & 64.8 & 64.3 \\
+\texttt{kas\_Arab} & \texttt{eng\_Latn} & 57.0 & \textbf{57.7} & 53.2 & 46.7 & \textbf{45.5} & 51.7 & 78.5 & \textbf{79.2} & 75.5 \\
+\texttt{eng\_Latn} & \texttt{kas\_Deva} & \textbf{16.2} & 15.5 & 13.0 & \textbf{103.1} & 120.7 & 167.9 & \textbf{48.3} & 47.3 & 44.1 \\
+\texttt{kas\_Deva} & \texttt{eng\_Latn} & 45.7 & \textbf{47.1} & 41.3 & 62.6 & \textbf{60.6} & 68.7 & 70.5 & \textbf{72.1} & 66.8 \\
+\texttt{eng\_Latn} & \texttt{taq\_Latn} & \textbf{21.8} & 20.9 & 19.4 & \textbf{105.2} & 114.7 & 126.5 & \textbf{53.5} & 52.6 & 51.4 \\
+\texttt{taq\_Latn} & \texttt{eng\_Latn} & 31.4 & \textbf{32.0} & 29.5 & 80.9 & \textbf{77.4} & 83.3 & 54.7 & \textbf{56.2} & 51.6 \\
+\texttt{eng\_Latn} & \texttt{taq\_Tfng} & \textbf{16.9} & 15.4 & 14.2 & \textbf{93.5} & 95.3 & 96.9 & 67.0 & \textbf{67.4} & 66.5 \\
+\texttt{taq\_Tfng} & \texttt{eng\_Latn} & 24.7 & \textbf{25.8} & 20.7 & 101.3 & \textbf{96.8} & 204.5 & 49.7 & \textbf{51.6} & 42.6 \\
+\end{longtable}
+\endgroup

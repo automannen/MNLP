@@ -1,0 +1,102 @@
+{
+  "model": "facebook/nllb-moe-54b",
+  "precision": "bf16",
+  "timestamp": "2026-10-04T21:24:18.605031+00:00",
+  "gpu": {
+    "available": true,
+    "name": "NVIDIA H100",
+    "count": 1,
+    "total_memory_gb": 100.0
+  },
+  "cpu_ram_gb": 755.6,
+  "benchmark_config": {
+    "direction": "eng_Latn-bak_Cyrl",
+    "split": "dev",
+    "batch_size": 16,
+    "max_length": 256,
+    "n_sanity": 10,
+    "n_timing": 100
+  },
+  "examples_available_in_split": 997,
+  "load": {
+    "seconds": 1268.1,
+    "peak_gpu_memory_gb": 75.25,
+    "device_map_module_counts": {
+      "0": 16,
+      "cpu": 14
+    },
+    "cpu_offload": true,
+    "disk_offload": false
+  },
+  "benchmark": {
+    "n_sentences_timed": 100,
+    "inference_seconds": 786.81,
+    "generated_tokens": 3452,
+    "sentences_per_second": 0.1271,
+    "tokens_per_second": 4.39,
+    "avg_seconds_per_sentence": 7.8681,
+    "peak_gpu_memory_gb": 73.88
+  },
+  "sample_translations": [
+    {
+      "id": 10,
+      "src_lang": "eng_Latn",
+      "tgt_lang": "bak_Cyrl",
+      "model": "nllb-moe-54b",
+      "quant": "bf16",
+      "source": "Around 11:29, the protest moved up Whitehall, past Trafalgar Square, along the Strand, passing by Aldwych and up Kingsway towards Holborn where the Conservative Party were holding their Spring Forum in the Grand Connaught Rooms hotel.",
+      "reference": "11:29 сәғәт тирәһендә протест Уайтһолл буйлап өҫкә табан, Трафальгар майҙаны янынан, Стрэнд буйынан, Олдвич янынан үтеп, Кингсуэй буйынса өҫкә табан, Grand Connaught Rooms ҡунаҡханаһында консерватив партия үҙенең Яҙғы форумын үткәргән Һолборн яғына йүнәлде.",
+      "hypothesis": "11:29 тирәһендә протест Уайтхоллға, Трафальгар майҙаны аша, Стренд буйлап, Олдвич аша үтеп, Консерватив партияның Гранд Коннотт Румс отелендә Яҙғы форумын үткәргән Холборнға табан Kingsway буйлап күсә."
+    },
+    {
+      "id": 11,
+      "src_lang": "eng_Latn",
+      "tgt_lang": "bak_Cyrl",
+      "model": "nllb-moe-54b",
+      "quant": "bf16",
+      "source": "Nadal's head to head record against the Canadian is 7–2.",
+      "reference": "Надалдең канадалыға ҡаршы шәхси иҫәбе – 7–2.",
+      "hypothesis": "Надальдың Канада уйынсыһына ҡаршы рекорды - 7-2."
+    },
+    {
+      "id": 12,
+      "src_lang": "eng_Latn",
+      "tgt_lang": "bak_Cyrl",
+      "model": "nllb-moe-54b",
+      "quant": "bf16",
+      "source": "He recently lost against Raonic in the Brisbane Open.",
+      "reference": "Күптән түгел ул Брисбен асыҡ турнирында Раоничтан еңелде.",
+      "hypothesis": "Күптән түгел Брисбен Асыҡ чемпионатында Раоничтан еңелә."
+    },
+    {
+      "id": 13,
+      "src_lang": "eng_Latn",
+      "tgt_lang": "bak_Cyrl",
+      "model": "nllb-moe-54b",
+      "quant": "bf16",
+      "source": "Nadal bagged 88% net points in the match winning 76 points in the first serve.",
+      "reference": "Тупты беренсе биреүҙә 76 мәрәй отоп, Надаль матчта 88 процент саф мәрәй йыйҙы.",
+      "hypothesis": "Надаль матчта 88% мәрәй йыя һәм беренсе партияла 76 мәрәй яулай."
+    },
+    {
+      "id": 14,
+      "src_lang": "eng_Latn",
+      "tgt_lang": "bak_Cyrl",
+      "model": "nllb-moe-54b",
+      "quant": "bf16",
+      "source": "After the match, King of Clay said, \"I am just excited about being back in the final rounds of the most important events. I am here to try to win this.\"",
+      "reference": "Уйындан һуң “Грунт батшаһы”: “Мин иң мөһим ваҡиғаларҙың финал раундтарына әйләнеп ҡайтыуыма тулҡынланам. Мин уны еңергә тырышыу өсөн бындамын ”, – тине.",
+      "hypothesis": "Матчтан һуң Клей короле: \"Мин иң мөһим ярыштарҙың финал раундына ҡайтыуыма бик шатмын."
+    }
+  ],
+  "extrapolation": {
+    "examples_per_direction": 997,
+    "total_directions_in_config": 50,
+    "estimated_seconds_one_direction": 7844.5,
+    "estimated_hours_one_direction": 2.18,
+    "estimated_seconds_full_experiment": 392223.6,
+    "estimated_hours_full_experiment": 108.95,
+    "estimated_gpu_hours_full_experiment_single_h100": 108.95,
+    "assumptions": "Linear extrapolation from one direction/batch size/precision; assumes constant throughput across directions and languages and a single H100 with no queueing. Excludes COMET/chrF++/TER scoring time and per-job model (re)load time."
+  }
+}
