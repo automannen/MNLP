@@ -24,12 +24,13 @@ languages:
 # Translation directions to build/evaluate, as [src_lang, tgt_lang] FLORES codes.
 # Constrained to at most 6 directions to keep experiments manageable.
 directions:
-  - [eng_Latn, swh_Latn]
-  - [swh_Latn, eng_Latn]
-  - [eng_Latn, rus_Cyrl]
-  - [rus_Cyrl, eng_Latn]
-  - [swh_Latn, rus_Cyrl]
-  - [rus_Cyrl, swh_Latn]
+  - [ace_Arab, eng_Latn]
+  # - [eng_Latn, swh_Latn]
+  # - [swh_Latn, eng_Latn]
+  # - [eng_Latn, rus_Cyrl]
+  # - [rus_Cyrl, eng_Latn]
+  # - [swh_Latn, rus_Cyrl]
+  # - [rus_Cyrl, swh_Latn]
   # - [eng_Latn, bak_Cyrl]
   # - [eng_Latn, cmn_Hant]
   # - [eng_Latn, yue_Hant]

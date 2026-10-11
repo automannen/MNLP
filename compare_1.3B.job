@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#SBATCH --partition=gpu_mig
+#SBATCH --partition=a100
 #SBATCH --gpus=1
 #SBATCH --job-name=compare_54B_1.3Bdistilled
 #SBATCH --ntasks=1

@@ -30,7 +30,8 @@ compare() {
     local out="results/compare_devtest_$1_vs_$2.csv"
     if [ -f "$out" ]; then echo "[compare] $out exists, skipping"; return; fi
     python evaluate.py --compare "$1" "$2" --outputs_dir outputs_devtest \
-        --bootstrap_samples 10000 --compare_csv "$out"
+        --bootstrap_samples 5000 --compare_csv "$out"
 }
-compare nllb-200-1.3B nllb-200-distilled-1.3B
-compare nllb-200-distilled-600M nllb-200-distilled-1.3B
+compare nllb-200-1.3B nllb-moe-54b
+compare nllb-200-distilled-600M nllb-moe-54b
+compare nllb-200-distilled-1.3B nllb-moe-54b

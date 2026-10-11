@@ -1,11 +1,11 @@
 #!/bin/bash
 
-#SBATCH --partition=gpu_mig
+#SBATCH --partition=gpu_a100
 #SBATCH --gpus=1
 #SBATCH --job-name=run_evaluation_devtest
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=9
-#SBATCH --time=24:00:00
+#SBATCH --time=07:00:00
 #SBATCH --output=slurm_output_evaluation_devtest_%A.out
 #SBATCH --error=slurm_error_evaluation_devtest_%A.err
 
@@ -28,5 +28,5 @@ source activate mnlp
 # Compute nodes have no internet: use the models cached by --prepare_only.
 export HF_HUB_OFFLINE=1
 python run_evaluation.py --config config_devtest.yaml \
-    --checkpoints facebook/nllb-200-distilled-600M facebook/nllb-200-distilled-1.3B facebook/nllb-200-1.3B \
-    --outputs_dir outputs_devtest --out_csv results/scores_devtest.csv "$@"
+    --checkpoints facebook/nllb-moe-54b \
+    --outputs_dir outputs_devtest/nllb-moe-54b --out_csv results/scores_devtest_nllb_54b_report_results.csv --skip_translation "$@"
