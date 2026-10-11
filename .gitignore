@@ -1,0 +1,5 @@
+data/
+__pycache__/
+*.pyc
+slurm_output_*.out
+slurm_error_*.err

@@ -1,0 +1,34 @@
+% Requires \usepackage{booktabs}.
+% Generated from outputs_devtest with output_stats.py (FLORES+ devtest, pooled over source languages).
+\begin{table*}[!htbp]
+\centering
+\footnotesize
+\setlength{\tabcolsep}{3pt}
+% \makebox keeps the table centred even where it is slightly wider than the text block.
+\makebox[\textwidth][c]{%
+\begin{tabular}{@{}l rrr rrr rrr rrr@{}}
+\toprule
+ & \multicolumn{3}{c}{Rep.\ 4-grams (\%)} & \multicolumn{3}{c}{Looping (\%)} & \multicolumn{3}{c}{``?'' per 100} & \multicolumn{3}{c}{Length ratio} \\
+\cmidrule(lr){2-4} \cmidrule(lr){5-7} \cmidrule(lr){8-10} \cmidrule(lr){11-13}
+Target & 1.3B & d-1.3B & d-600M & 1.3B & d-1.3B & d-600M & 1.3B & d-1.3B & d-600M & 1.3B & d-1.3B & d-600M \\
+\midrule
+\texttt{ace\_Arab} & 33.5 & 51.2 & 55.3 & 18.0 & 27.8 & 34.7 & 56.9 & 256.4 & 261.5 & 1.39 & 1.82 & 1.79 \\
+\texttt{bjn\_Arab} & 35.4 & 52.4 & 32.2 & 15.9 & 26.5 & 19.6 & 27.4 & 156.6 & 216.0 & 1.23 & 1.53 & 1.14 \\
+\texttt{kas\_Deva} & 12.7 & 29.1 & 55.8 & 4.6 & 9.3 & 22.0 & 0.3 & 0.3 & 0.3 & 0.97 & 1.15 & 1.48 \\
+\texttt{taq\_Tfng} & 10.7 & 16.2 & 22.6 & 6.6 & 10.2 & 17.6 & 0.3 & 0.5 & 0.3 & 1.01 & 1.10 & 1.11 \\
+\texttt{taq\_Latn} & 14.9 & 21.0 & 31.3 & 4.5 & 8.9 & 15.8 & 0.3 & 0.3 & 0.1 & 1.10 & 1.25 & 1.31 \\
+\texttt{ace\_Latn} & 16.0 & 15.8 & 24.3 & 4.9 & 4.4 & 5.7 & 0.4 & 0.4 & 0.4 & 1.09 & 1.09 & 1.21 \\
+\texttt{yue\_Hant} & 5.8 & 5.6 & 18.6 & 1.5 & 1.3 & 4.0 & 0.7 & 0.6 & 0.4 & 0.92 & 0.86 & 0.94 \\
+\texttt{kas\_Arab} & 1.6 & 4.7 & 4.5 & 1.1 & 1.8 & 3.2 & 0.5 & 0.5 & 0.5 & 1.01 & 1.04 & 1.03 \\
+\texttt{swh\_Latn} & 7.7 & 5.4 & 8.4 & 1.4 & 0.8 & 1.8 & 0.4 & 0.4 & 0.5 & 1.03 & 1.00 & 1.01 \\
+\texttt{bak\_Cyrl} & 6.7 & 3.3 & 8.2 & 1.3 & 0.8 & 1.8 & 0.5 & 0.4 & 0.4 & 0.95 & 0.93 & 0.95 \\
+\texttt{cmn\_Hant} & 4.2 & 4.5 & 9.6 & 0.6 & 0.7 & 2.1 & 0.2 & 0.3 & 0.3 & 0.64 & 0.65 & 0.69 \\
+\texttt{arb\_Arab} & 3.0 & 1.2 & 3.9 & 0.9 & 0.3 & 1.1 & 0.5 & 0.6 & 0.5 & 0.98 & 0.96 & 0.96 \\
+\texttt{rus\_Cyrl} & 4.7 & 1.4 & 2.9 & 1.2 & 0.3 & 0.6 & 0.4 & 0.3 & 0.4 & 0.95 & 0.93 & 0.93 \\
+\texttt{eng\_Latn} & 1.8 & 1.5 & 4.6 & 0.4 & 0.3 & 1.1 & 0.4 & 0.5 & 0.5 & 0.98 & 0.96 & 0.99 \\
+\texttt{bjn\_Latn} & 1.5 & 0.0 & 0.1 & 0.3 & 0.0 & 0.5 & 0.5 & 0.5 & 0.5 & 0.98 & 0.97 & 0.97 \\
+\bottomrule
+\end{tabular}}
+\caption{Surface statistics of the translations on the FLORES+ devtest split, pooled over all source languages, for NLLB-200 1.3B (1.3B), NLLB-200 distilled 1.3B (d-1.3B) and NLLB-200 distilled 600M (d-600M). Rep.\ 4-grams: share of 4-grams that already occurred earlier in the same sentence. Looping: share of sentences in which a span is repeated at least three times in a row. ``?'' per 100: question marks per 100 sentences. Length ratio: hypothesis length divided by reference length, in non-whitespace characters. Repetition is counted over words, and over characters for \texttt{cmn\_Hant} and \texttt{yue\_Hant}. On the references, repeated 4-grams are at most 0.6\%, no sentence loops and there are about 0.5 question marks per 100 sentences for every language. Rows are ordered by the share of looping sentences (mean over the three models).}
+\label{tab:output-stats}
+\end{table*}

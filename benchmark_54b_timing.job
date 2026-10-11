@@ -1,0 +1,39 @@
+#!/bin/bash
+
+#SBATCH --partition=gpu_h100
+#SBATCH --gpus=1
+#SBATCH --job-name=bench54b_timing
+#SBATCH --ntasks=1
+#SBATCH --cpus-per-task=16
+#SBATCH --time=03:00:00
+#SBATCH --output=slurm_output_bench54b_timing_%A.out
+#SBATCH --error=slurm_error_bench54b_timing_%A.err
+
+# Stage 2 of 2 (see README §32): only submit this after
+# benchmark_54b_loadcheck.job succeeded. Small feasibility/timing benchmark
+# (10 sanity + 100 timed sentences on ONE direction) - NOT the full FLORES
+# experiment. Extrapolates to the full experiment runtime from config.yaml.
+#
+# --time budget is a guess; increase it if CPU offload makes generation slow.
+# Load check showed CPU offload, so batch_size is 16 to amortize weight transfers.
+
+module purge
+module load 2025
+module load Anaconda3/2025.06-1
+
+cd $HOME/MNLP/
+
+source activate mnlp
+
+# Must match the HF_HOME used for the login-node download (README §32) -
+# facebook/nllb-moe-54b is ~220GB, too big for the 200 GiB home quota.
+export HF_HOME=/scratch-shared/$USER/hf_cache
+export HF_HUB_OFFLINE=1
+python benchmark_nllb_moe_54b.py \
+    --checkpoint facebook/nllb-moe-54b \
+    --precision bf16 \
+    --n_sanity 10 \
+    --n_timing 100 \
+    --batch_size 16 \
+    --max_length 256 \
+    --out_json results/benchmark_nllb_moe_54b_h100.json

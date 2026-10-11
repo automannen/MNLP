@@ -1,0 +1,39 @@
+#!/bin/bash
+
+#SBATCH --partition=gpu_mig
+#SBATCH --gpus=1
+#SBATCH --job-name=beam_test
+#SBATCH --ntasks=1
+#SBATCH --cpus-per-task=9
+#SBATCH --time=08:00:00
+#SBATCH --output=slurm_output_beam_test_%A.out
+#SBATCH --error=slurm_error_beam_test_%A.err
+
+# Does beam search reduce the looping outputs? Translates the directions in
+# config_beamtest.yaml (dev split) with all three small models, once with beam size 4
+# (run label fp32_beam4) and once greedy, as in the main runs (label fp32), into
+# outputs_beamtest/. The final scoring treats greedy as the baseline, so the beam-4 rows of
+# results/scores_beamtest.csv show the change from greedy, with bootstrap p-values.
+# Download the data first on the login node with:
+#   python run_evaluation.py --config config_beamtest.yaml --prepare_only
+
+module purge
+module load 2025
+module load Anaconda3/2025.06-1
+
+cd $HOME/MNLP/
+
+source activate mnlp
+
+# Compute nodes have no internet: use the models cached by --prepare_only.
+export HF_HUB_OFFLINE=1
+MODELS="facebook/nllb-200-distilled-600M facebook/nllb-200-distilled-1.3B facebook/nllb-200-1.3B"
+
+# Beam search first, so a problem with it shows up early. Its scoring is only a quick
+# intermediate (no COMET); the full scoring of both decodings happens in the second call.
+python run_evaluation.py --config config_beamtest.yaml --checkpoints $MODELS \
+    --num_beams 4 --quant fp32_beam4 --outputs_dir outputs_beamtest \
+    --out_csv outputs_beamtest/scores_beam4_only.csv --no_comet --bootstrap_samples 100 || exit 1
+
+python run_evaluation.py --config config_beamtest.yaml --checkpoints $MODELS \
+    --quant fp32 --outputs_dir outputs_beamtest --out_csv results/scores_beamtest.csv

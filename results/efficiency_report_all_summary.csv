@@ -1,0 +1,5 @@
+model,quant,role,architecture,parameters_m,active_parameters_m,compression_ratio,compression_ratio_active,disk_gb,peak_gpu_memory_gb,batch_size,tokens_per_second,speedup,latency_median_ms,latency_p90_ms,joules_per_1k_tokens,gflops_per_token,distillation_gpu_hours,COMET,chrF++,chrF++_retained_pct,spBLEU,spBLEU_retained_pct
+nllb-moe-54b,bf16,teacher,MoE 24enc/24dec d=2048,54500.6,3750.8,1.0,1.0,220.12,75.16,16,3.68,1.0,94162.0,159035.1,34946.8,,,71.216,39.146,100.0,22.751,100.0
+nllb-200-distilled-1.3B,fp32,student,dense 24enc/24dec d=1024,1370.6,1370.6,39.76,2.74,5.483,7.52,16,499.15,135.64,505.2,1125.7,515.8,,,69.299,37.449,93.56,20.712,81.92
+nllb-200-distilled-600M,fp32,student,dense 12enc/12dec d=1024,615.1,615.1,88.61,6.1,2.46,3.46,16,961.96,261.4,299.5,641.2,244.7,,,67.006,35.441,88.11,18.293,69.43
+nllb-200-1.3B,fp32,baseline,dense 24enc/24dec d=1024,1370.6,1370.6,39.76,2.74,5.483,7.6,16,505.79,137.44,547.3,1061.9,505.5,,,69.235,37.592,95.03,20.565,85.22

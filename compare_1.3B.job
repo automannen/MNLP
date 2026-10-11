@@ -1,0 +1,25 @@
+#!/bin/bash
+
+#SBATCH --partition=a100
+#SBATCH --gpus=1
+#SBATCH --job-name=compare_54B_1.3Bdistilled
+#SBATCH --ntasks=1
+#SBATCH --cpus-per-task=9
+#SBATCH --time=04:00:00
+#SBATCH --output=slurm_output_compare_1.3B_54B_%A_%a.out
+#SBATCH --error=slurm_error_compare_1.3B_54B_%A_%a.err
+
+# Significance test: distilled vs non-distilled NLLB-1.3B, using the translations
+# already in outputs/ (run run_evaluation_1.3B.job first). Nothing is translated again.
+
+module purge
+module load 2025
+module load Anaconda3/2025.06-1
+
+cd $HOME/MNLP/
+
+source activate mnlp
+
+# Compute nodes have no internet: use the COMET model cached by --prepare_only.
+export HF_HUB_OFFLINE=1
+python evaluate.py --compare nllb-200-distilled-600M nllb-200-distilled-1.3B --bootstrap_samples 10000

@@ -1,0 +1,38 @@
+#!/bin/bash
+
+#SBATCH --partition=gpu_h100
+#SBATCH --gpus=1
+#SBATCH --job-name=efficiency_600M
+#SBATCH --ntasks=1
+#SBATCH --cpus-per-task=16
+#SBATCH --time=03:00:00
+#SBATCH --output=slurm_output_efficiency_600M_%A.out
+#SBATCH --error=slurm_error_efficiency_600M_%A.err
+
+# Adds the distilled 600M student to the efficiency results of run_efficiency.job, whose
+# measurements of the 1.3B models and the 54B teacher are reused (results/efficiency_*.json).
+# Measured with exactly the same settings as those, on dev, so the speedups stay comparable.
+# The report then compares all students with the teacher on the dev translations in outputs/,
+# because the 54B has no devtest translations.
+
+module purge
+module load 2025
+module load Anaconda3/2025.06-1
+
+cd $HOME/MNLP/
+
+source activate mnlp
+
+# Compute nodes have no internet: use the models cached on the login node.
+export HF_HUB_OFFLINE=1
+
+# Must stay identical to SETTINGS in run_efficiency.job.
+SETTINGS="--directions eng_Latn-ace_Arab ace_Arab-eng_Latn arb_Arab-ace_Arab ace_Arab-arb_Arab \
+                       rus_Cyrl-bak_Cyrl bak_Cyrl-rus_Cyrl eng_Latn-swh_Latn swh_Latn-eng_Latn \
+          --n_sentences 32 --batch_size 16 --runs 3 --n_latency 5 --max_length 256"
+
+python evaluate_efficiency.py measure --checkpoint facebook/nllb-200-distilled-600M --precision fp32 $SETTINGS
+
+python evaluate_efficiency.py report --teacher nllb-moe-54b \
+    --students nllb-200-distilled-1.3B nllb-200-distilled-600M --baselines nllb-200-1.3B \
+    --out_prefix results/efficiency_report_all

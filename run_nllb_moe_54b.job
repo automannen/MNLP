@@ -1,0 +1,30 @@
+#!/bin/bash
+
+#SBATCH --partition=gpu_h100
+#SBATCH --gpus=1
+#SBATCH --job-name=moe54b_run
+#SBATCH --ntasks=1
+#SBATCH --cpus-per-task=16
+#SBATCH --time=24:00:00
+#SBATCH --output=slurm_output_moe54b_run_%A.out
+#SBATCH --error=slurm_error_moe54b_run_%A.err
+
+# 8 directions x 997 dev sentences at ~7.9 s/sentence (benchmark) is ~17.5 h + ~21 min load.
+# Finished directions are skipped, so if this times out just resubmit it.
+# All languages used below must already be cached in data/flores/dev (see README section 32).
+
+module purge
+module load 2025
+module load Anaconda3/2025.06-1
+
+cd $HOME/MNLP/
+
+source activate mnlp
+
+export HF_HOME=/scratch-shared/$USER/hf_cache
+export HF_HUB_OFFLINE=1
+python run_nllb_moe_54b.py \
+    --directions eng_Latn-ace_Arab ace_Arab-eng_Latn arb_Arab-ace_Arab ace_Arab-arb_Arab \
+                 rus_Cyrl-bak_Cyrl bak_Cyrl-rus_Cyrl eng_Latn-swh_Latn swh_Latn-eng_Latn \
+    --batch_size 16 \
+    --max_length 256

@@ -1,0 +1,26 @@
+#!/bin/bash
+
+#SBATCH --partition=rome
+#SBATCH --job-name=langid_devtest
+#SBATCH --ntasks=1
+#SBATCH --cpus-per-task=16
+#SBATCH --time=00:40:00
+#SBATCH --output=slurm_output_langid_devtest_%A.out
+#SBATCH --error=slurm_error_langid_devtest_%A.err
+
+# Language identification of the devtest translations in outputs_devtest/ (run
+# run_evaluation_devtest.job first). Nothing is translated again; CPU only.
+# Before submitting, cache the two language-ID models on the login node:
+#   python identify_languages.py --prepare_only
+
+module purge
+module load 2025
+module load Anaconda3/2025.06-1
+
+cd $HOME/MNLP/
+
+source activate mnlp
+
+# Compute nodes have no internet: use the models cached by --prepare_only.
+export HF_HUB_OFFLINE=1
+python identify_languages.py --model nllb-moe-54b --outputs_dir outputs_devtest --csv results/langid_devtest_moe_54b.csv

@@ -1,0 +1,77 @@
+{
+  "model": "nllb-moe-54b",
+  "checkpoint": "facebook/nllb-moe-54b",
+  "quant": "bf16",
+  "timestamp": "2026-10-06T16:50:07.924605+00:00",
+  "gpu": {
+    "available": true,
+    "name": "NVIDIA H100",
+    "count": 1,
+    "total_memory_gb": 100.0
+  },
+  "load": {
+    "seconds": 1954.5,
+    "peak_gpu_memory_gb": 75.25,
+    "device_map_module_counts": {
+      "0": 16,
+      "cpu": 14
+    },
+    "cpu_offload": true,
+    "disk_offload": false
+  },
+  "architecture": {
+    "model_type": "nllb-moe",
+    "kind": "MoE",
+    "encoder_layers": 24,
+    "decoder_layers": 24,
+    "d_model": 2048,
+    "encoder_ffn_dim": 8192,
+    "decoder_ffn_dim": 8192,
+    "num_experts": 128
+  },
+  "size": {
+    "parameters": 54500569088,
+    "active_parameters_per_token": 3750785024,
+    "weights_gb": 109.001,
+    "disk_gb": 220.12
+  },
+  "settings": {
+    "directions": [
+      "eng_Latn-ace_Arab",
+      "ace_Arab-eng_Latn",
+      "arb_Arab-ace_Arab",
+      "ace_Arab-arb_Arab",
+      "rus_Cyrl-bak_Cyrl",
+      "bak_Cyrl-rus_Cyrl",
+      "eng_Latn-swh_Latn",
+      "swh_Latn-eng_Latn"
+    ],
+    "split": "dev",
+    "n_sentences_per_direction": 32,
+    "batch_size": 16,
+    "max_length": 256,
+    "max_input_length": 512,
+    "num_beams": 4
+  },
+  "distillation_gpu_hours": null,
+  "throughput": {
+    "batch_size": 16,
+    "runs": 3,
+    "n_sentences": 256,
+    "generated_tokens_per_run": 10964,
+    "tokens_per_second": 3.68,
+    "tokens_per_second_std": 0.01,
+    "sentences_per_second": 0.086,
+    "peak_gpu_memory_gb": 75.16,
+    "mean_gpu_watts": 128.6,
+    "joules_per_1k_tokens": 34946.8
+  },
+  "latency": {
+    "n_sentences": 40,
+    "mean_ms": 99386.0,
+    "median_ms": 94162.0,
+    "p90_ms": 159035.1,
+    "p99_ms": 236452.1,
+    "peak_gpu_memory_gb": 73.3
+  }
+}

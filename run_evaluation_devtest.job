@@ -1,0 +1,32 @@
+#!/bin/bash
+
+#SBATCH --partition=gpu_a100
+#SBATCH --gpus=1
+#SBATCH --job-name=run_evaluation_devtest
+#SBATCH --ntasks=1
+#SBATCH --cpus-per-task=9
+#SBATCH --time=07:00:00
+#SBATCH --output=slurm_output_evaluation_devtest_%A.out
+#SBATCH --error=slurm_error_evaluation_devtest_%A.err
+
+# Final evaluation on the FLORES devtest split (config_devtest.yaml) for the three small
+# models. Writes to outputs_devtest/ so the dev translations in outputs/ are kept.
+# Download data and models first on the login node with:
+#   python run_evaluation.py --config config_devtest.yaml --prepare_only \
+#     --checkpoints facebook/nllb-200-distilled-600M facebook/nllb-200-distilled-1.3B facebook/nllb-200-1.3B
+# Extra arguments are passed on and override the ones below, e.g. for a quick test:
+#   sbatch --time=00:30:00 run_evaluation_devtest.job --limit_batches 2 --no_comet --outputs_dir outputs_devtest_smoketest
+
+module purge
+module load 2025
+module load Anaconda3/2025.06-1
+
+cd $HOME/MNLP/
+
+source activate mnlp
+
+# Compute nodes have no internet: use the models cached by --prepare_only.
+export HF_HUB_OFFLINE=1
+python run_evaluation.py --config config_devtest.yaml \
+    --checkpoints facebook/nllb-moe-54b \
+    --outputs_dir outputs_devtest/nllb-moe-54b --out_csv results/scores_devtest_nllb_54b_report_results.csv --skip_translation "$@"

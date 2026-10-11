@@ -1,0 +1,37 @@
+#!/bin/bash
+
+#SBATCH --partition=gpu_a100
+#SBATCH --gpus=1
+#SBATCH --job-name=compare_devtest
+#SBATCH --ntasks=1
+#SBATCH --cpus-per-task=9
+#SBATCH --time=04:00:00
+#SBATCH --output=slurm_output_compare_devtest_%A.out
+#SBATCH --error=slurm_error_compare_devtest_%A.err
+
+# Significance tests on the devtest translations in outputs_devtest/ (run
+# run_evaluation_devtest.job first). Nothing is translated again.
+#   1. distilled vs non-distilled NLLB-1.3B (the distillation gap)
+#   2. distilled 600M vs distilled 1.3B (the size gap)
+
+module purge
+module load 2025
+module load Anaconda3/2025.06-1
+
+cd $HOME/MNLP/
+
+source activate mnlp
+
+# Compute nodes have no internet: use the COMET model cached by --prepare_only.
+export HF_HUB_OFFLINE=1
+# Each comparison takes about 2.5 h; one whose CSV already exists is skipped, so after a
+# timeout the job can simply be resubmitted.
+compare() {
+    local out="results/compare_devtest_$1_vs_$2.csv"
+    if [ -f "$out" ]; then echo "[compare] $out exists, skipping"; return; fi
+    python evaluate.py --compare "$1" "$2" --outputs_dir outputs_devtest \
+        --bootstrap_samples 20000 --compare_csv "$out"
+}
+compare nllb-200-1.3B nllb-moe-54b
+compare nllb-200-distilled-600M nllb-moe-54b
+compare nllb-200-distilled-1.3B nllb-moe-54b

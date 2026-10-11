@@ -1,0 +1,29 @@
+% Requires \usepackage{booktabs}.
+% Generated from results/compare_devtest_*.csv (paired bootstrap, 10000 resamples, FLORES+ devtest).
+\begin{table*}[!htbp]
+\centering
+\footnotesize
+\setlength{\tabcolsep}{6pt}
+\makebox[\textwidth][c]{%
+\begin{tabular}{@{}l ccc r@{}}
+\toprule
+ & \multicolumn{3}{c}{Number of directions (out of 76) where d-1.3B is} & \\
+\cmidrule(lr){2-4}
+Metric & significantly better & not significantly different & significantly worse & Mean improvement \\
+\midrule
+\multicolumn{5}{@{}l}{\textit{d-1.3B compared with 1.3B (same size, not distilled)}} \\
+\addlinespace[2pt]
+chrF++ & 20 & 48 & 8 & $+$0.35 \\
+TER    & 10 & 57 & 9 & $-$2.99 \\
+COMET  & 25 & 43 & 8 & $+$0.50 \\
+\addlinespace
+\multicolumn{5}{@{}l}{\textit{d-1.3B compared with d-600M (smaller, distilled)}} \\
+\addlinespace[2pt]
+chrF++ & 62 & 14 & 0 & $+$2.31 \\
+TER    & 47 & 26 & 3 & $+$6.80 \\
+COMET  & 56 & 20 & 0 & $+$2.67 \\
+\bottomrule
+\end{tabular}}
+\caption{Significance of the differences between NLLB-200 distilled 1.3B (d-1.3B) and the other two models, NLLB-200 1.3B (1.3B) and NLLB-200 distilled 600M (d-600M), on the FLORES+ devtest split. Each row sorts the 76 translation directions by the outcome of a paired bootstrap resampling test (10{,}000 resamples, two-sided, $p < 0.05$ after Bonferroni correction). Mean improvement is the average change in metric points over the 76 directions when using d-1.3B instead of the other model; positive always means d-1.3B is better (for TER, a lower TER).}
+\label{tab:significance-summary}
+\end{table*}
