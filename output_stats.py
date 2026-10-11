@@ -131,9 +131,11 @@ def main():
                         help="directory with <model>/<quant>/<src>-<tgt>.jsonl translations")
     parser.add_argument("--csv", default="results/output_stats_devtest.csv",
                         help="where to write the per-direction table")
+    parser.add_argument("--model", default=None,
+                    help="evaluate only this model (default: all models)")
     args = parser.parse_args()
 
-    paths = sorted(glob.glob(os.path.join(args.outputs_dir, "*", "*", "*.jsonl")))
+    paths = sorted(glob.glob(os.path.join(args.outputs_dir, args.model or "*", "*", "*.jsonl")))
     if not paths:
         raise FileNotFoundError(f"no .jsonl files found under {args.outputs_dir}")
 

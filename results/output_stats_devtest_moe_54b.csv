@@ -1,0 +1,13 @@
+model,quant,direction,src_lang,tgt_lang,unit,n_sentences,rep_ngram_pct,ref_rep_ngram_pct,pct_sent_loop,ref_pct_sent_loop,mean_loop_copies,qmarks_per_100,ref_qmarks_per_100,pct_sent_extra_qmarks,len_ratio,mean_len,ref_mean_len,pct_sent_long,pct_sent_short
+nllb-moe-54b,bf16,ace_Arab-eng_Latn,ace_Arab,eng_Latn,word,1012,0.57,0.05,0.1,0.0,3.0,0.3,0.49,0.0,0.967,106.2,109.8,0.49,3.66
+nllb-moe-54b,bf16,bjn_Arab-eng_Latn,bjn_Arab,eng_Latn,word,1012,0.2,0.05,0.0,0.0,0.0,0.49,0.49,0.0,0.994,109.1,109.8,0.59,2.17
+nllb-moe-54b,bf16,bjn_Latn-eng_Latn,bjn_Latn,eng_Latn,word,1012,0.07,0.05,0.0,0.0,0.0,0.3,0.49,0.0,0.933,102.4,109.8,0.0,4.74
+nllb-moe-54b,bf16,cmn_Hant-yue_Hant,cmn_Hant,yue_Hant,char,1012,10.73,0.6,1.98,0.0,67.7,0.3,0.49,0.0,0.786,31.0,39.4,2.17,38.64
+nllb-moe-54b,bf16,eng_Latn-ace_Arab,eng_Latn,ace_Arab,word,1012,7.1,0.1,5.04,0.0,23.4,33.5,0.4,12.06,1.131,101.5,89.7,6.23,2.67
+nllb-moe-54b,bf16,eng_Latn-bjn_Arab,eng_Latn,bjn_Arab,word,1012,19.35,0.05,9.58,0.0,35.6,17.69,0.49,6.32,1.073,109.6,102.1,6.42,3.75
+nllb-moe-54b,bf16,eng_Latn-bjn_Latn,eng_Latn,bjn_Latn,word,1012,0.07,0.02,0.0,0.0,0.0,0.49,0.49,0.0,0.958,113.3,118.3,0.3,2.47
+nllb-moe-54b,bf16,eng_Latn-taq_Tfng,eng_Latn,taq_Tfng,word,1012,5.25,0.04,5.43,0.0,13.7,0.49,0.59,0.0,1.008,103.1,102.3,4.94,3.16
+nllb-moe-54b,bf16,eng_Latn-yue_Hant,eng_Latn,yue_Hant,char,1012,0.89,0.6,0.1,0.0,24.0,0.3,0.49,0.0,0.793,31.2,39.4,0.2,21.34
+nllb-moe-54b,bf16,taq_Tfng-eng_Latn,taq_Tfng,eng_Latn,word,1012,0.94,0.05,0.3,0.0,6.7,0.49,0.49,0.0,0.941,103.2,109.8,1.98,6.32
+nllb-moe-54b,bf16,yue_Hant-cmn_Hant,yue_Hant,cmn_Hant,char,1012,0.49,0.49,0.1,0.0,6.0,0.3,0.49,0.2,0.512,20.2,39.4,0.0,77.77
+nllb-moe-54b,bf16,yue_Hant-eng_Latn,yue_Hant,eng_Latn,word,1012,0.29,0.05,0.1,0.0,28.0,0.3,0.49,0.0,0.922,101.2,109.8,0.3,6.13

@@ -64,14 +64,15 @@ def summarize(counts, expected, top_k):
             for label, count in counts.most_common(top_k)]
 
 
-def run(lid_name, outputs_dir, top_k):
+def run(lid_name, outputs_dir, top_k, model_filter=None):
     lid_model = load_lid_model(lid_name)
     aliases = LABEL_ALIASES[lid_name]
 
     rows = []
     ref_counts = {}
     pooled = defaultdict(Counter)
-    paths = sorted(glob.glob(os.path.join(outputs_dir, "*", "*", "*.jsonl")))
+    paths = sorted(glob.glob(
+    os.path.join(outputs_dir, model_filter or "*", "*", "*.jsonl")))
     for path in paths:
         model, quant = path.split(os.sep)[-3:-1]
         direction = os.path.basename(path)[:-len(".jsonl")]
@@ -195,6 +196,9 @@ def main():
                         help="output of --compare (default: results/langid_compare_<A>_vs_<B>.csv)")
     parser.add_argument("--bootstrap_samples", type=int, default=1000)
     parser.add_argument("--seed", type=int, default=12345)
+    parser.add_argument("--model", default=None,
+                        help="analyze only this model (default: all models)")
+
     args = parser.parse_args()
 
     if args.prepare_only:
@@ -209,7 +213,7 @@ def main():
 
     rows = []
     for name in args.lid_models:
-        rows += run(name, args.outputs_dir, args.top_k)
+        rows += run(name, args.outputs_dir, args.top_k, args.model)
 
     os.makedirs(os.path.dirname(args.csv) or ".", exist_ok=True)
     with open(args.csv, "w", newline="", encoding="utf-8") as f:

@@ -4,7 +4,7 @@
 #SBATCH --job-name=langid_devtest
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=16
-#SBATCH --time=00:20:00
+#SBATCH --time=00:40:00
 #SBATCH --output=slurm_output_langid_devtest_%A.out
 #SBATCH --error=slurm_error_langid_devtest_%A.err
 
@@ -23,4 +23,4 @@ source activate mnlp
 
 # Compute nodes have no internet: use the models cached by --prepare_only.
 export HF_HUB_OFFLINE=1
-python identify_languages.py --outputs_dir outputs_devtest --csv results/langid_devtest.csv
+python identify_languages.py --model nllb-moe-54b --outputs_dir outputs_devtest --csv results/langid_devtest_moe_54b.csv
