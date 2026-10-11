@@ -1,0 +1,41 @@
+#!/bin/bash
+
+#SBATCH --partition=gpu_h100
+#SBATCH --gpus=1
+#SBATCH --job-name=moe54b_devtest
+#SBATCH --ntasks=1
+#SBATCH --cpus-per-task=16
+#SBATCH --time=07:00:00
+#SBATCH --array=0-5
+#SBATCH --output=slurm_output_moe54b_devtest_%A_%a.out
+#SBATCH --error=slurm_error_moe54b_devtest_%A_%a.err
+
+# 6 parallel array tasks, one language pair (2 directions) each.
+# Per task: 2 directions x 1012 devtest sentences at ~7.9 s/sentence is ~4.4 h + ~21 min load.
+# Finished directions are skipped, so if a task times out just resubmit it.
+# All languages used below must already be cached in data/flores/devtest (see README section 32).
+
+module purge
+module load 2025
+module load Anaconda3/2025.06-1
+
+cd $HOME/MNLP/
+
+source activate mnlp
+
+PAIRS=(
+    "ace_Arab-eng_Latn eng_Latn-ace_Arab"
+    "bjn_Arab-eng_Latn eng_Latn-bjn_Arab"
+    "taq_Tfng-eng_Latn eng_Latn-taq_Tfng"
+    "yue_Hant-eng_Latn eng_Latn-yue_Hant"
+    "bjn_Latn-eng_Latn eng_Latn-bjn_Latn"
+    "yue_Hant-cmn_Hant cmn_Hant-yue_Hant"
+)
+
+export HF_HOME=/scratch-shared/$USER/hf_cache
+export HF_HUB_OFFLINE=1
+python run_nllb_moe_54b.py --config config_devtest.yaml \
+    --directions ${PAIRS[$SLURM_ARRAY_TASK_ID]} \
+    --batch_size 16 \
+    --max_length 256 \
+    --outputs_dir outputs_devtest "$@"

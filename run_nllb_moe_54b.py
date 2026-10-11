@@ -31,6 +31,8 @@ def main():
     config = load_config(args.config)
     split = config["dataset"]["split"]
     model_name = args.checkpoint.split("/")[-1]
+    # FLORES code -> NLLB code (e.g. cmn_Hant -> zho_Hant); file names and records keep the FLORES code.
+    flores_to_nllb = config["model"]["language_code_mapping"]
 
     # Data first: a missing offline cache should fail in seconds, not after the long model load.
     data = {}
@@ -59,7 +61,8 @@ def main():
             continue
 
         start = time.time()
-        hyps, _ = translate_pairs(model, tokenizer, pairs, src_lang, tgt_lang, args.batch_size, args.max_length)
+        hyps, _ = translate_pairs(model, tokenizer, pairs, flores_to_nllb.get(src_lang, src_lang),
+                                  flores_to_nllb.get(tgt_lang, tgt_lang), args.batch_size, args.max_length)
         os.makedirs(os.path.dirname(path), exist_ok=True)
         with open(path + ".tmp", "w", encoding="utf-8") as f:
             for p, hyp in zip(pairs, hyps):

@@ -14,7 +14,7 @@ COMET_MODEL = "Unbabel/wmt22-comet-da"
 
 
 def translate_all(dataloaders, model, flores_to_nllb, tokenizer, model_name, quant, outputs_dir,
-                  max_length, limit_batches=None):
+                  max_length, limit_batches=None, num_beams=None):
     for direction, dataloader in dataloaders.items():
         src_lang, tgt_lang = direction.split("-")
         
@@ -34,7 +34,8 @@ def translate_all(dataloaders, model, flores_to_nllb, tokenizer, model_name, qua
         for i, batch in enumerate(dataloader):
             if limit_batches and i >= limit_batches:
                 break
-            hyps = translate_batch(model, batch, tokenizer, tgt_lang_model, max_length=max_length)
+            hyps = translate_batch(model, batch, tokenizer, tgt_lang_model, max_length=max_length,
+                                   num_beams=num_beams)
             for sent_id, source, reference, hyp in zip(
                 batch["ids"], batch["sources"], batch["references"], hyps
             ):
@@ -68,6 +69,9 @@ def main():
     parser.add_argument("--outputs_dir", default="outputs")
     parser.add_argument("--out_csv", default="results/scores.csv")
     parser.add_argument("--max_length", type=int, default=256, help="max output length in generate()")
+    parser.add_argument("--num_beams", type=int,
+                        help="beam size in generate() (default: the model's own, greedy for NLLB-200); "
+                             "give the run a matching --quant label, e.g. fp32_beam4")
     parser.add_argument("--limit_batches", type=int, help="only translate the first N batches per direction (test)")
     parser.add_argument("--skip_translation", action="store_true", help="only evaluate existing outputs")
     parser.add_argument("--prepare_only", action="store_true",
@@ -101,7 +105,7 @@ def main():
         print(f"[translate] model {checkpoint}")
         model = load_model(checkpoint)
         translate_all(dataloaders, model, config["model"]["language_code_mapping"], tokenizer, model_name, args.quant,
-                      args.outputs_dir, args.max_length, args.limit_batches)
+                      args.outputs_dir, args.max_length, args.limit_batches, args.num_beams)
         del model
 
     if args.prepare_only:

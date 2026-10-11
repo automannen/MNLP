@@ -1,18 +1,22 @@
 % Requires \usepackage{booktabs} and \usepackage{longtable}.
 % Generated from results/scores_devtest.csv (FLORES+ devtest, 1012 sentences per direction).
 \begingroup
-\small
-\setlength{\tabcolsep}{4pt}
-\begin{longtable}{ll rrr rrr rrr}
-\caption{Scores on the FLORES+ devtest split for NLLB-200 1.3B (1.3B), NLLB-200 distilled 1.3B (d-1.3B) and NLLB-200 distilled 600M (d-600M). TER is computed with sacreBLEU using \texttt{normalized=True} and \texttt{asian\_support=True}. The best score per metric in each row is in bold.}
-\label{tab:devtest-scores} \\
+\footnotesize
+\setlength{\tabcolsep}{3pt}
+% Centre the table (also when it is wider than the text block) and let the caption use the full text width, like the table floats.
+\setlength{\LTleft}{0pt plus 1fill minus 1fill}
+\setlength{\LTright}{0pt plus 1fill minus 1fill}
+\setlength{\LTcapwidth}{\textwidth}
+% Typeset the caption at the normal size, like the captions of the table floats.
+\renewcommand{\tablename}{\normalsize Table}
+\begin{longtable}{@{}ll rrr rrr rrr@{}}
 \toprule
  & & \multicolumn{3}{c}{chrF++ $\uparrow$} & \multicolumn{3}{c}{TER $\downarrow$} & \multicolumn{3}{c}{COMET $\uparrow$} \\
 \cmidrule(lr){3-5} \cmidrule(lr){6-8} \cmidrule(lr){9-11}
 Source & Target & 1.3B & d-1.3B & d-600M & 1.3B & d-1.3B & d-600M & 1.3B & d-1.3B & d-600M \\
 \midrule
 \endfirsthead
-\multicolumn{11}{l}{\tablename\ \thetable\ (continued)} \\
+\multicolumn{11}{l}{\textit{Continued from previous page}} \\
 \toprule
  & & \multicolumn{3}{c}{chrF++ $\uparrow$} & \multicolumn{3}{c}{TER $\downarrow$} & \multicolumn{3}{c}{COMET $\uparrow$} \\
 \cmidrule(lr){3-5} \cmidrule(lr){6-8} \cmidrule(lr){9-11}
@@ -20,9 +24,12 @@ Source & Target & 1.3B & d-1.3B & d-600M & 1.3B & d-1.3B & d-600M & 1.3B & d-1.3
 \midrule
 \endhead
 \midrule
-\multicolumn{11}{r}{Continued on next page} \\
+\multicolumn{11}{r}{\textit{Continued on next page}} \\
 \endfoot
 \bottomrule
+\addlinespace[\abovecaptionskip]
+\caption{Scores on the FLORES+ devtest split for NLLB-200 1.3B (1.3B), NLLB-200 distilled 1.3B (d-1.3B) and NLLB-200 distilled 600M (d-600M). TER is computed with sacreBLEU using \texttt{normalized=True} and \texttt{asian\_support=True}. The best score per metric in each row is in bold.}
+\label{tab:devtest-scores} \\
 \endlastfoot
 \multicolumn{11}{l}{\textit{The eight original languages}} \\
 \texttt{eng\_Latn} & \texttt{swh\_Latn} & \textbf{57.5} & 57.4 & 56.2 & \textbf{47.6} & 48.8 & 50.4 & 83.1 & \textbf{83.2} & 82.5 \\

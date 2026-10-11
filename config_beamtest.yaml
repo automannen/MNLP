@@ -1,0 +1,55 @@
+# Decoding check on dev: greedy vs beam search (beam_test.job) on the directions where the
+# devtest outputs loop most, plus two control directions that barely loop.
+
+dataset:
+  name: openlanguagedata/flores_plus
+  split: dev
+  # Local cache dir the dataset is downloaded to once and re-used from afterwards
+  # (Snellius compute nodes have no internet access).
+  data_dir: data/flores
+
+# Human-readable name -> FLORES language+script code.
+languages:
+  en: eng_Latn
+  sw: swh_Latn
+  ru: rus_Cyrl
+  ba: bak_Cyrl
+  zh: cmn_Hant
+  yue: yue_Hant
+  ar: arb_Arab
+  ace: ace_Arab
+  # Script-contrast additions (same language, different script).
+  ace_latn: ace_Latn
+  bjn_arab: bjn_Arab
+  bjn_latn: bjn_Latn
+  kas_arab: kas_Arab
+  kas_deva: kas_Deva
+  taq_latn: taq_Latn
+  taq_tfng: taq_Tfng
+
+# Translation directions to build/evaluate, as [src_lang, tgt_lang] FLORES codes.
+directions:
+  # Directions with the most looping outputs on devtest.
+  - [eng_Latn, ace_Arab]
+  - [arb_Arab, ace_Arab]
+  - [bak_Cyrl, ace_Arab]
+  - [cmn_Hant, ace_Arab]
+  - [eng_Latn, bjn_Arab]
+  - [eng_Latn, kas_Deva]
+  - [taq_Tfng, eng_Latn]
+  # Controls: hardly any looping on devtest.
+  - [eng_Latn, ace_Latn]
+  - [eng_Latn, swh_Latn]
+
+model:
+  checkpoint: facebook/nllb-200-distilled-600M
+  # language code mapping from Flores data set -> NLLB language code
+  language_code_mapping:
+    cmn_Hant: zho_Hant
+
+dataloader:
+  batch_size: 16
+  max_length: 512
+
+# Where standardized, validated per-direction data is written before modeling.
+processed_dir: data/processed
