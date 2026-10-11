@@ -5,6 +5,18 @@
 All languages/directions/model settings are defined in [`config.yaml`](config.yaml)
 (max 6 directions, single pairs work fine too).
 
+
+When installing models and datasets on the login node run the following commands in the terminal before running the python commands:
+```bash
+module purge
+module load 2025
+module load Anaconda3/2025.06-1
+
+cd $HOME/MNLP/
+source activate mnlp
+```
+
+
 ```bash
 # One-off, run where internet is available (e.g. Snellius login node):
 python download_dataset.py --config config.yaml
@@ -36,4 +48,6 @@ To get the significance scores, run the following command:
 python evaluate.py --compare <checkpoint1> <checkpoint2> --bootstrap_samples <num_samples>
 ```
 
-The script will compute the significance scores between the two checkpoints specified. It will store the results in a CSV file named "compare_<checkpoint1>_<checkpoint2>.csv" in the results directory. Again the script will make a csv and write to it so make sure that the results do not get overwritten if you have a previous CSV file with the same name. See the compare_devtest.job for an example of how to run the script with the devtest set. 
+The script will compute the significance scores between the two checkpoints specified. It will store the results in a CSV file named "compare_<checkpoint1>_<checkpoint2>.csv" in the results directory. Again the script will make a csv and write to it so make sure that the results do not get overwritten if you have a previous CSV file with the same name. See the compare_devtest.job for an example of how to run the script with the devtest set.
+
+The other job scripts in the MNLP directory are examples to run different parts of the evaluation pipeline. There are job files running on the dev set and the devtest set. 
