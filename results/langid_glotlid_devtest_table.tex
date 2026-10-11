@@ -1,0 +1,29 @@
+\begin{table*}[!htbp]
+\centering
+\footnotesize
+% \makebox keeps the table centred even where it is wider than the text block.
+\makebox[\textwidth][c]{%
+\begin{tabular}{@{}lrrrrl@{}}
+\toprule
+Target & Ref. & 1.3B & d-1.3B & d-600M & Most frequent other label \\
+\midrule
+\texttt{ace\_Arab} & 99.1 & 37.4 & 16.8 & 16.1 & \texttt{bjn\_Arab} (45.5) \\
+\texttt{yue\_Hant} & 80.9 & 71.0 & 66.8 & 57.5 & \texttt{cmn\_Hani} (29.4) \\
+\texttt{bjn\_Arab} & 98.7 & 74.6 & 64.4 & 69.1 & \texttt{zsm\_Arab} (11.0) \\
+\texttt{taq\_Tfng} & 99.5 & 89.4 & 78.9 & 75.3 & \texttt{zgh\_Tfng} (12.5) \\
+\texttt{arb\_Arab} & 86.9 & 82.6 & 84.8 & 83.7 & \texttt{ary\_Arab} (6.0) \\
+\texttt{bjn\_Latn} & 97.8 & 88.0 & 90.1 & 87.2 & \texttt{ind\_Latn} (10.2) \\
+\texttt{swh\_Latn} & 96.8 & 90.9 & 91.4 & 89.6 & \texttt{swc\_Latn} (8.7) \\
+\texttt{cmn\_Hant} & 98.9 & 96.4 & 96.3 & 95.3 & \texttt{jpn\_Jpan} (1.0) \\
+\texttt{ace\_Latn} & 99.7 & 95.7 & 95.5 & 97.3 & \texttt{ind\_Latn} (2.9) \\
+\texttt{kas\_Deva} & 99.9 & 98.5 & 98.3 & 94.2 & \texttt{hin\_Deva} (2.0) \\
+\texttt{taq\_Latn} & 96.5 & 98.9 & 97.3 & 96.3 & -- \\
+\texttt{eng\_Latn} & 100.0 & 99.8 & 99.9 & 98.9 & -- \\
+\texttt{bak\_Cyrl} & 100.0 & 99.8 & 99.7 & 99.4 & -- \\
+\texttt{kas\_Arab} & 99.6 & 99.8 & 99.5 & 99.7 & -- \\
+\texttt{rus\_Cyrl} & 100.0 & 99.9 & 99.9 & 99.8 & -- \\
+\bottomrule
+\end{tabular}}
+\caption{Share of FLORES+ devtest sentences (\%) that GlotLID identifies as the target language, pooled over all source languages, for the references (Ref.), NLLB-200 1.3B (1.3B), NLLB-200 distilled 1.3B (d-1.3B) and NLLB-200 distilled 600M (d-600M). The last column is the most frequent other label in the model outputs, with its share averaged over the three models. Rows are ordered from most to least output in another language (mean over the three models).}
+\label{tab:langid-glotlid}
+\end{table*}

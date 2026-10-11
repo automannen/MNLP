@@ -1,0 +1,118 @@
+% Requires \usepackage{booktabs} and \usepackage{longtable}.
+% Generated from results/compare_devtest_*.csv (paired bootstrap, 10000 resamples, FLORES+ devtest).
+\begingroup
+\footnotesize
+\setlength{\tabcolsep}{3pt}
+\setlength{\LTleft}{0pt plus 1fill minus 1fill}
+\setlength{\LTright}{0pt plus 1fill minus 1fill}
+\setlength{\LTcapwidth}{\textwidth}
+\renewcommand{\tablename}{\normalsize Table}
+\begin{longtable}{@{}ll rrr rrr@{}}
+\toprule
+ & & \multicolumn{3}{c}{d-1.3B vs.\ 1.3B} & \multicolumn{3}{c}{d-1.3B vs.\ d-600M} \\
+\cmidrule(lr){3-5} \cmidrule(lr){6-8}
+Source & Target & chrF++ & TER & COMET & chrF++ & TER & COMET \\
+\midrule
+\endfirsthead
+\multicolumn{8}{l}{\textit{Continued from previous page}} \\
+\toprule
+ & & \multicolumn{3}{c}{d-1.3B vs.\ 1.3B} & \multicolumn{3}{c}{d-1.3B vs.\ d-600M} \\
+\cmidrule(lr){3-5} \cmidrule(lr){6-8}
+Source & Target & chrF++ & TER & COMET & chrF++ & TER & COMET \\
+\midrule
+\endhead
+\midrule
+\multicolumn{8}{r}{\textit{Continued on next page}} \\
+\endfoot
+\bottomrule
+\addlinespace[\abovecaptionskip]
+\caption{Gain of NLLB-200 distilled 1.3B (d-1.3B) over NLLB-200 1.3B (1.3B) and over NLLB-200 distilled 600M (d-600M) on the FLORES+ devtest split, in metric points. Positive values mean d-1.3B is better; for TER a positive gain means a lower TER. $^{*}$ marks differences that are significant under paired bootstrap resampling (10{,}000 resamples, two-sided, $p < 0.05$ after Bonferroni correction over the 228 tests of each comparison).}
+\label{tab:significance-directions} \\
+\endlastfoot
+\texttt{eng\_Latn} & \texttt{swh\_Latn} & $-$0.1\phantom{$^{*}$} & $-$1.1\phantom{$^{*}$} & $+$0.0\phantom{$^{*}$} & $+$1.3$^{*}$ & $+$1.6\phantom{$^{*}$} & $+$0.7\phantom{$^{*}$} \\
+\texttt{eng\_Latn} & \texttt{rus\_Cyrl} & $+$0.6\phantom{$^{*}$} & $+$0.9\phantom{$^{*}$} & $+$0.5\phantom{$^{*}$} & $+$2.5$^{*}$ & $+$3.0$^{*}$ & $+$2.3$^{*}$ \\
+\texttt{eng\_Latn} & \texttt{bak\_Cyrl} & $-$0.0\phantom{$^{*}$} & $+$0.6\phantom{$^{*}$} & $-$0.2\phantom{$^{*}$} & $+$1.8$^{*}$ & $+$3.8$^{*}$ & $+$0.5\phantom{$^{*}$} \\
+\texttt{eng\_Latn} & \texttt{cmn\_Hant} & $+$0.2\phantom{$^{*}$} & $+$0.6\phantom{$^{*}$} & $+$1.1\phantom{$^{*}$} & $-$0.3\phantom{$^{*}$} & $+$0.2\phantom{$^{*}$} & $+$0.9\phantom{$^{*}$} \\
+\texttt{eng\_Latn} & \texttt{yue\_Hant} & $+$0.7\phantom{$^{*}$} & $+$0.8\phantom{$^{*}$} & $+$0.4\phantom{$^{*}$} & $+$2.5$^{*}$ & $+$4.8$^{*}$ & $+$3.5$^{*}$ \\
+\texttt{eng\_Latn} & \texttt{arb\_Arab} & $+$0.4\phantom{$^{*}$} & $+$0.1\phantom{$^{*}$} & $+$0.2\phantom{$^{*}$} & $+$2.7$^{*}$ & $+$3.1$^{*}$ & $+$1.8$^{*}$ \\
+\texttt{eng\_Latn} & \texttt{ace\_Arab} & $-$0.8\phantom{$^{*}$} & $-$29.3$^{*}$ & $-$1.2\phantom{$^{*}$} & $+$1.1$^{*}$ & $-$13.6\phantom{$^{*}$} & $+$1.1\phantom{$^{*}$} \\
+\addlinespace
+\texttt{swh\_Latn} & \texttt{eng\_Latn} & $-$0.4\phantom{$^{*}$} & $-$0.8\phantom{$^{*}$} & $+$0.1\phantom{$^{*}$} & $+$2.9$^{*}$ & $+$3.1$^{*}$ & $+$1.7$^{*}$ \\
+\texttt{swh\_Latn} & \texttt{rus\_Cyrl} & $+$0.1\phantom{$^{*}$} & $-$0.6\phantom{$^{*}$} & $+$0.7\phantom{$^{*}$} & $+$3.3$^{*}$ & $+$3.0$^{*}$ & $+$4.3$^{*}$ \\
+\texttt{swh\_Latn} & \texttt{bak\_Cyrl} & $+$0.4\phantom{$^{*}$} & $+$1.4\phantom{$^{*}$} & $+$0.0\phantom{$^{*}$} & $+$2.8$^{*}$ & $+$5.2$^{*}$ & $+$1.0$^{*}$ \\
+\texttt{swh\_Latn} & \texttt{cmn\_Hant} & $+$0.4\phantom{$^{*}$} & $-$0.2\phantom{$^{*}$} & $+$1.7$^{*}$ & $-$0.5\phantom{$^{*}$} & $-$1.2\phantom{$^{*}$} & $-$0.2\phantom{$^{*}$} \\
+\texttt{swh\_Latn} & \texttt{yue\_Hant} & $+$0.4\phantom{$^{*}$} & $+$2.0\phantom{$^{*}$} & $+$0.3\phantom{$^{*}$} & $+$1.8$^{*}$ & $+$5.7$^{*}$ & $+$3.6$^{*}$ \\
+\texttt{swh\_Latn} & \texttt{arb\_Arab} & $+$0.1\phantom{$^{*}$} & $+$0.1\phantom{$^{*}$} & $+$0.4\phantom{$^{*}$} & $+$4.1$^{*}$ & $+$4.9$^{*}$ & $+$4.4$^{*}$ \\
+\texttt{swh\_Latn} & \texttt{ace\_Arab} & $-$2.0$^{*}$ & $-$34.2$^{*}$ & $-$3.9$^{*}$ & $+$0.7\phantom{$^{*}$} & $-$22.0$^{*}$ & $+$0.3\phantom{$^{*}$} \\
+\addlinespace
+\texttt{rus\_Cyrl} & \texttt{eng\_Latn} & $-$0.0\phantom{$^{*}$} & $+$0.4\phantom{$^{*}$} & $+$0.1\phantom{$^{*}$} & $+$2.0$^{*}$ & $+$2.4$^{*}$ & $+$1.1$^{*}$ \\
+\texttt{rus\_Cyrl} & \texttt{swh\_Latn} & $-$0.3\phantom{$^{*}$} & $+$2.4\phantom{$^{*}$} & $+$0.1\phantom{$^{*}$} & $+$1.3$^{*}$ & $+$1.1\phantom{$^{*}$} & $+$1.0$^{*}$ \\
+\texttt{rus\_Cyrl} & \texttt{bak\_Cyrl} & $-$0.1\phantom{$^{*}$} & $+$0.3\phantom{$^{*}$} & $-$0.3\phantom{$^{*}$} & $+$1.1$^{*}$ & $+$2.2$^{*}$ & $+$0.2\phantom{$^{*}$} \\
+\texttt{rus\_Cyrl} & \texttt{cmn\_Hant} & $+$0.2\phantom{$^{*}$} & $+$1.0\phantom{$^{*}$} & $+$1.1\phantom{$^{*}$} & $+$0.1\phantom{$^{*}$} & $+$3.6$^{*}$ & $+$3.1$^{*}$ \\
+\texttt{rus\_Cyrl} & \texttt{yue\_Hant} & $+$0.9\phantom{$^{*}$} & $+$1.3\phantom{$^{*}$} & $+$0.5\phantom{$^{*}$} & $+$1.7$^{*}$ & $+$2.4\phantom{$^{*}$} & $+$2.2$^{*}$ \\
+\texttt{rus\_Cyrl} & \texttt{arb\_Arab} & $+$0.6\phantom{$^{*}$} & $+$1.4$^{*}$ & $+$0.3\phantom{$^{*}$} & $+$2.7$^{*}$ & $+$3.1$^{*}$ & $+$2.7$^{*}$ \\
+\texttt{rus\_Cyrl} & \texttt{ace\_Arab} & $-$1.7$^{*}$ & $-$34.6$^{*}$ & $-$3.4$^{*}$ & $+$1.2$^{*}$ & $-$5.6\phantom{$^{*}$} & $+$1.4\phantom{$^{*}$} \\
+\addlinespace
+\texttt{bak\_Cyrl} & \texttt{eng\_Latn} & $+$0.2\phantom{$^{*}$} & $+$0.8\phantom{$^{*}$} & $+$0.4\phantom{$^{*}$} & $+$2.7$^{*}$ & $+$3.5$^{*}$ & $+$1.8$^{*}$ \\
+\texttt{bak\_Cyrl} & \texttt{swh\_Latn} & $+$1.1$^{*}$ & $+$4.3\phantom{$^{*}$} & $+$0.4\phantom{$^{*}$} & $+$2.8$^{*}$ & $+$6.1$^{*}$ & $+$1.8$^{*}$ \\
+\texttt{bak\_Cyrl} & \texttt{rus\_Cyrl} & $+$0.4\phantom{$^{*}$} & $+$0.6\phantom{$^{*}$} & $+$0.5\phantom{$^{*}$} & $+$2.6$^{*}$ & $+$3.1$^{*}$ & $+$3.0$^{*}$ \\
+\texttt{bak\_Cyrl} & \texttt{cmn\_Hant} & $+$0.9$^{*}$ & $+$3.9\phantom{$^{*}$} & $+$2.7$^{*}$ & $-$0.7\phantom{$^{*}$} & $+$2.7\phantom{$^{*}$} & $+$0.4\phantom{$^{*}$} \\
+\texttt{bak\_Cyrl} & \texttt{yue\_Hant} & $+$0.6\phantom{$^{*}$} & $+$2.4\phantom{$^{*}$} & $+$0.1\phantom{$^{*}$} & $+$2.8$^{*}$ & $+$8.4$^{*}$ & $+$4.3$^{*}$ \\
+\texttt{bak\_Cyrl} & \texttt{arb\_Arab} & $+$0.7\phantom{$^{*}$} & $+$0.4\phantom{$^{*}$} & $+$0.7$^{*}$ & $+$4.6$^{*}$ & $+$7.4$^{*}$ & $+$4.2$^{*}$ \\
+\texttt{bak\_Cyrl} & \texttt{ace\_Arab} & $-$2.3$^{*}$ & $-$49.7$^{*}$ & $-$5.8$^{*}$ & $+$2.2$^{*}$ & $+$0.5\phantom{$^{*}$} & $+$3.3$^{*}$ \\
+\addlinespace
+\texttt{cmn\_Hant} & \texttt{eng\_Latn} & $+$1.1$^{*}$ & $+$2.0\phantom{$^{*}$} & $+$1.0$^{*}$ & $+$4.2$^{*}$ & $+$8.2$^{*}$ & $+$3.3$^{*}$ \\
+\texttt{cmn\_Hant} & \texttt{swh\_Latn} & $+$1.8\phantom{$^{*}$} & $+$10.4\phantom{$^{*}$} & $+$2.7$^{*}$ & $+$1.2\phantom{$^{*}$} & $-$0.7\phantom{$^{*}$} & $+$1.0\phantom{$^{*}$} \\
+\texttt{cmn\_Hant} & \texttt{rus\_Cyrl} & $+$3.7$^{*}$ & $+$24.9$^{*}$ & $+$6.1$^{*}$ & $+$3.4$^{*}$ & $+$14.5$^{*}$ & $+$6.1$^{*}$ \\
+\texttt{cmn\_Hant} & \texttt{bak\_Cyrl} & $+$0.9\phantom{$^{*}$} & $+$5.1\phantom{$^{*}$} & $+$0.5\phantom{$^{*}$} & $+$0.5\phantom{$^{*}$} & $-$3.7\phantom{$^{*}$} & $-$0.7\phantom{$^{*}$} \\
+\texttt{cmn\_Hant} & \texttt{yue\_Hant} & $-$1.8$^{*}$ & $-$2.1\phantom{$^{*}$} & $-$0.4\phantom{$^{*}$} & $+$0.8\phantom{$^{*}$} & $+$22.3$^{*}$ & $+$2.7$^{*}$ \\
+\texttt{cmn\_Hant} & \texttt{arb\_Arab} & $+$2.6$^{*}$ & $+$9.9$^{*}$ & $+$2.8$^{*}$ & $+$2.4$^{*}$ & $-$2.8\phantom{$^{*}$} & $+$2.1$^{*}$ \\
+\texttt{cmn\_Hant} & \texttt{ace\_Arab} & $-$0.6\phantom{$^{*}$} & $-$72.2$^{*}$ & $+$0.2\phantom{$^{*}$} & $+$4.4$^{*}$ & $+$24.6$^{*}$ & $+$12.7$^{*}$ \\
+\addlinespace
+\texttt{yue\_Hant} & \texttt{eng\_Latn} & $+$1.0$^{*}$ & $+$1.5\phantom{$^{*}$} & $+$0.5\phantom{$^{*}$} & $+$3.4$^{*}$ & $+$4.3$^{*}$ & $+$1.9$^{*}$ \\
+\texttt{yue\_Hant} & \texttt{swh\_Latn} & $+$1.6$^{*}$ & $+$1.3\phantom{$^{*}$} & $+$0.7\phantom{$^{*}$} & $+$3.0$^{*}$ & $+$5.3\phantom{$^{*}$} & $+$2.1$^{*}$ \\
+\texttt{yue\_Hant} & \texttt{rus\_Cyrl} & $+$1.4$^{*}$ & $+$1.4\phantom{$^{*}$} & $+$0.9$^{*}$ & $+$3.6$^{*}$ & $+$4.8$^{*}$ & $+$4.0$^{*}$ \\
+\texttt{yue\_Hant} & \texttt{bak\_Cyrl} & $+$1.9$^{*}$ & $+$4.3\phantom{$^{*}$} & $+$0.8\phantom{$^{*}$} & $+$3.2$^{*}$ & $+$4.3$^{*}$ & $+$1.0$^{*}$ \\
+\texttt{yue\_Hant} & \texttt{cmn\_Hant} & $+$2.2$^{*}$ & $+$4.9$^{*}$ & $+$5.3$^{*}$ & $+$0.4\phantom{$^{*}$} & $+$0.7\phantom{$^{*}$} & $+$1.9$^{*}$ \\
+\texttt{yue\_Hant} & \texttt{arb\_Arab} & $+$1.6$^{*}$ & $+$1.6$^{*}$ & $+$0.8$^{*}$ & $+$4.8$^{*}$ & $+$6.9$^{*}$ & $+$4.4$^{*}$ \\
+\texttt{yue\_Hant} & \texttt{ace\_Arab} & $-$1.8$^{*}$ & $-$38.8$^{*}$ & $-$3.7$^{*}$ & $+$2.0$^{*}$ & $+$6.2\phantom{$^{*}$} & $+$3.1$^{*}$ \\
+\addlinespace
+\texttt{arb\_Arab} & \texttt{eng\_Latn} & $+$0.2\phantom{$^{*}$} & $+$0.0\phantom{$^{*}$} & $+$0.2\phantom{$^{*}$} & $+$2.8$^{*}$ & $+$3.2$^{*}$ & $+$1.7$^{*}$ \\
+\texttt{arb\_Arab} & \texttt{swh\_Latn} & $+$0.1\phantom{$^{*}$} & $+$0.9\phantom{$^{*}$} & $+$0.4\phantom{$^{*}$} & $+$2.3$^{*}$ & $+$2.2\phantom{$^{*}$} & $+$1.7$^{*}$ \\
+\texttt{arb\_Arab} & \texttt{rus\_Cyrl} & $+$0.4\phantom{$^{*}$} & $+$0.3\phantom{$^{*}$} & $+$0.4\phantom{$^{*}$} & $+$3.0$^{*}$ & $+$3.7$^{*}$ & $+$3.2$^{*}$ \\
+\texttt{arb\_Arab} & \texttt{bak\_Cyrl} & $+$1.0\phantom{$^{*}$} & $+$1.7\phantom{$^{*}$} & $+$0.2\phantom{$^{*}$} & $+$3.1$^{*}$ & $+$3.4$^{*}$ & $+$0.9$^{*}$ \\
+\texttt{arb\_Arab} & \texttt{cmn\_Hant} & $+$0.4\phantom{$^{*}$} & $-$0.4\phantom{$^{*}$} & $+$1.5$^{*}$ & $+$0.7\phantom{$^{*}$} & $+$1.5\phantom{$^{*}$} & $+$3.4$^{*}$ \\
+\texttt{arb\_Arab} & \texttt{yue\_Hant} & $+$1.1$^{*}$ & $+$1.7\phantom{$^{*}$} & $+$1.1$^{*}$ & $+$1.6$^{*}$ & $+$5.2$^{*}$ & $+$3.0$^{*}$ \\
+\texttt{arb\_Arab} & \texttt{ace\_Arab} & $-$2.1$^{*}$ & $-$39.6$^{*}$ & $-$4.2$^{*}$ & $+$0.7\phantom{$^{*}$} & $-$18.5$^{*}$ & $+$0.6\phantom{$^{*}$} \\
+\addlinespace
+\texttt{ace\_Arab} & \texttt{eng\_Latn} & $+$1.0$^{*}$ & $+$2.8$^{*}$ & $+$2.3$^{*}$ & $+$3.1$^{*}$ & $+$4.8$^{*}$ & $+$4.2$^{*}$ \\
+\texttt{ace\_Arab} & \texttt{swh\_Latn} & $+$1.1$^{*}$ & $+$7.8\phantom{$^{*}$} & $+$2.8$^{*}$ & $+$3.7$^{*}$ & $+$19.6$^{*}$ & $+$5.5$^{*}$ \\
+\texttt{ace\_Arab} & \texttt{rus\_Cyrl} & $+$0.8$^{*}$ & $+$3.4\phantom{$^{*}$} & $+$2.8$^{*}$ & $+$2.5$^{*}$ & $+$3.5\phantom{$^{*}$} & $+$6.7$^{*}$ \\
+\texttt{ace\_Arab} & \texttt{bak\_Cyrl} & $+$1.4$^{*}$ & $+$15.7$^{*}$ & $+$1.5$^{*}$ & $+$3.9$^{*}$ & $+$28.3$^{*}$ & $+$3.3$^{*}$ \\
+\texttt{ace\_Arab} & \texttt{cmn\_Hant} & $+$0.4\phantom{$^{*}$} & $+$0.6\phantom{$^{*}$} & $+$2.3$^{*}$ & $+$1.3$^{*}$ & $+$13.4$^{*}$ & $+$7.6$^{*}$ \\
+\texttt{ace\_Arab} & \texttt{yue\_Hant} & $+$0.8\phantom{$^{*}$} & $+$5.0\phantom{$^{*}$} & $+$2.2$^{*}$ & $+$2.9$^{*}$ & $+$44.0$^{*}$ & $+$10.0$^{*}$ \\
+\texttt{ace\_Arab} & \texttt{arb\_Arab} & $+$1.0$^{*}$ & $+$5.1\phantom{$^{*}$} & $+$3.1$^{*}$ & $+$3.3$^{*}$ & $+$11.7$^{*}$ & $+$6.7$^{*}$ \\
+\midrule
+\texttt{eng\_Latn} & \texttt{ace\_Latn} & $-$0.1\phantom{$^{*}$} & $-$0.1\phantom{$^{*}$} & $-$0.8$^{*}$ & $+$1.1$^{*}$ & $+$1.6\phantom{$^{*}$} & $-$0.1\phantom{$^{*}$} \\
+\texttt{swh\_Latn} & \texttt{ace\_Latn} & $+$0.2\phantom{$^{*}$} & $+$0.4\phantom{$^{*}$} & $+$0.6\phantom{$^{*}$} & $+$2.4$^{*}$ & $+$8.8\phantom{$^{*}$} & $+$1.5$^{*}$ \\
+\texttt{rus\_Cyrl} & \texttt{ace\_Latn} & $-$0.3\phantom{$^{*}$} & $+$3.7\phantom{$^{*}$} & $+$0.1\phantom{$^{*}$} & $+$1.0\phantom{$^{*}$} & $+$13.2$^{*}$ & $+$0.0\phantom{$^{*}$} \\
+\texttt{bak\_Cyrl} & \texttt{ace\_Latn} & $+$0.0\phantom{$^{*}$} & $+$3.0\phantom{$^{*}$} & $-$0.5\phantom{$^{*}$} & $+$3.0$^{*}$ & $+$24.2$^{*}$ & $-$0.2\phantom{$^{*}$} \\
+\texttt{cmn\_Hant} & \texttt{ace\_Latn} & $-$1.1\phantom{$^{*}$} & $-$10.8\phantom{$^{*}$} & $-$0.1\phantom{$^{*}$} & $-$0.7\phantom{$^{*}$} & $-$2.1\phantom{$^{*}$} & $-$1.3\phantom{$^{*}$} \\
+\texttt{yue\_Hant} & \texttt{ace\_Latn} & $-$0.3\phantom{$^{*}$} & $-$1.2\phantom{$^{*}$} & $+$0.9\phantom{$^{*}$} & $+$1.6$^{*}$ & $+$22.9$^{*}$ & $+$0.3\phantom{$^{*}$} \\
+\texttt{arb\_Arab} & \texttt{ace\_Latn} & $-$0.2\phantom{$^{*}$} & $-$1.2\phantom{$^{*}$} & $-$0.1\phantom{$^{*}$} & $+$1.4$^{*}$ & $+$12.2\phantom{$^{*}$} & $-$0.3\phantom{$^{*}$} \\
+\texttt{ace\_Latn} & \texttt{eng\_Latn} & $+$0.9\phantom{$^{*}$} & $+$1.5\phantom{$^{*}$} & $+$1.0$^{*}$ & $+$4.4$^{*}$ & $+$8.5\phantom{$^{*}$} & $+$4.4$^{*}$ \\
+\midrule
+\texttt{eng\_Latn} & \texttt{bjn\_Arab} & $-$1.3$^{*}$ & $-$43.1$^{*}$ & $-$2.0$^{*}$ & $+$0.3\phantom{$^{*}$} & $-$37.7$^{*}$ & $+$0.3\phantom{$^{*}$} \\
+\texttt{bjn\_Arab} & \texttt{eng\_Latn} & $+$1.7$^{*}$ & $+$3.2$^{*}$ & $+$2.3$^{*}$ & $+$4.7$^{*}$ & $+$7.3$^{*}$ & $+$6.0$^{*}$ \\
+\texttt{eng\_Latn} & \texttt{bjn\_Latn} & $+$0.8\phantom{$^{*}$} & $+$1.9$^{*}$ & $+$0.3\phantom{$^{*}$} & $+$1.8$^{*}$ & $+$1.6$^{*}$ & $+$1.1$^{*}$ \\
+\texttt{bjn\_Latn} & \texttt{eng\_Latn} & $+$0.7\phantom{$^{*}$} & $+$0.9\phantom{$^{*}$} & $+$0.2\phantom{$^{*}$} & $+$3.1$^{*}$ & $+$3.6$^{*}$ & $+$2.6$^{*}$ \\
+\texttt{eng\_Latn} & \texttt{kas\_Arab} & $+$0.5\phantom{$^{*}$} & $-$2.5\phantom{$^{*}$} & $-$0.2\phantom{$^{*}$} & $+$2.0$^{*}$ & $+$1.1\phantom{$^{*}$} & $+$0.6\phantom{$^{*}$} \\
+\texttt{kas\_Arab} & \texttt{eng\_Latn} & $+$0.6\phantom{$^{*}$} & $+$1.3\phantom{$^{*}$} & $+$0.7$^{*}$ & $+$4.5$^{*}$ & $+$6.2$^{*}$ & $+$3.7$^{*}$ \\
+\texttt{eng\_Latn} & \texttt{kas\_Deva} & $-$0.7\phantom{$^{*}$} & $-$17.6$^{*}$ & $-$1.0$^{*}$ & $+$2.5$^{*}$ & $+$47.2$^{*}$ & $+$3.2$^{*}$ \\
+\texttt{kas\_Deva} & \texttt{eng\_Latn} & $+$1.4$^{*}$ & $+$1.9$^{*}$ & $+$1.6$^{*}$ & $+$5.7$^{*}$ & $+$8.1$^{*}$ & $+$5.4$^{*}$ \\
+\texttt{eng\_Latn} & \texttt{taq\_Latn} & $-$0.9\phantom{$^{*}$} & $-$9.5\phantom{$^{*}$} & $-$0.9\phantom{$^{*}$} & $+$1.5$^{*}$ & $+$11.7\phantom{$^{*}$} & $+$1.2$^{*}$ \\
+\texttt{taq\_Latn} & \texttt{eng\_Latn} & $+$0.6\phantom{$^{*}$} & $+$3.4\phantom{$^{*}$} & $+$1.5$^{*}$ & $+$2.5$^{*}$ & $+$5.9$^{*}$ & $+$4.6$^{*}$ \\
+\texttt{eng\_Latn} & \texttt{taq\_Tfng} & $-$1.5$^{*}$ & $-$1.7\phantom{$^{*}$} & $+$0.3\phantom{$^{*}$} & $+$1.2$^{*}$ & $+$1.7\phantom{$^{*}$} & $+$0.8$^{*}$ \\
+\texttt{taq\_Tfng} & \texttt{eng\_Latn} & $+$1.2$^{*}$ & $+$4.5\phantom{$^{*}$} & $+$1.9$^{*}$ & $+$5.2$^{*}$ & $+$107.7$^{*}$ & $+$8.9$^{*}$ \\
+\end{longtable}
+\endgroup

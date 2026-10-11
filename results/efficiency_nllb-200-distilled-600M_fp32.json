@@ -1,0 +1,76 @@
+{
+  "model": "nllb-200-distilled-600M",
+  "checkpoint": "facebook/nllb-200-distilled-600M",
+  "quant": "fp32",
+  "timestamp": "2026-10-09T13:12:16.870497+00:00",
+  "gpu": {
+    "available": true,
+    "name": "NVIDIA H100",
+    "count": 1,
+    "total_memory_gb": 100.0
+  },
+  "load": {
+    "seconds": 4.8,
+    "peak_gpu_memory_gb": 5.61,
+    "device_map_module_counts": {
+      "0": 1
+    },
+    "cpu_offload": false,
+    "disk_offload": false
+  },
+  "architecture": {
+    "model_type": "m2m_100",
+    "kind": "dense",
+    "encoder_layers": 12,
+    "decoder_layers": 12,
+    "d_model": 1024,
+    "encoder_ffn_dim": 4096,
+    "decoder_ffn_dim": 4096,
+    "num_experts": null
+  },
+  "size": {
+    "parameters": 615073792,
+    "active_parameters_per_token": 615073792,
+    "weights_gb": 2.46,
+    "disk_gb": 2.46
+  },
+  "settings": {
+    "directions": [
+      "eng_Latn-ace_Arab",
+      "ace_Arab-eng_Latn",
+      "arb_Arab-ace_Arab",
+      "ace_Arab-arb_Arab",
+      "rus_Cyrl-bak_Cyrl",
+      "bak_Cyrl-rus_Cyrl",
+      "eng_Latn-swh_Latn",
+      "swh_Latn-eng_Latn"
+    ],
+    "split": "dev",
+    "n_sentences_per_direction": 32,
+    "batch_size": 16,
+    "max_length": 256,
+    "max_input_length": 512,
+    "num_beams": 1
+  },
+  "distillation_gpu_hours": null,
+  "throughput": {
+    "batch_size": 16,
+    "runs": 3,
+    "n_sentences": 256,
+    "generated_tokens_per_run": 11447,
+    "tokens_per_second": 961.96,
+    "tokens_per_second_std": 0.57,
+    "sentences_per_second": 21.513,
+    "peak_gpu_memory_gb": 3.46,
+    "mean_gpu_watts": 235.4,
+    "joules_per_1k_tokens": 244.7
+  },
+  "latency": {
+    "n_sentences": 40,
+    "mean_ms": 368.0,
+    "median_ms": 299.5,
+    "p90_ms": 641.2,
+    "p99_ms": 1268.8,
+    "peak_gpu_memory_gb": 2.56
+  }
+}
